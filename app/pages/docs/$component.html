@@ -1,0 +1,14 @@
+<hf-theme></hf-theme>
+<hf-responsive-sidebar >
+  <img slot=logo src="https://picsum.photos/24" alt="logo">
+  <p slot=domain>hf-dash.com</p>
+  <div slot=nav-items>
+    <hf-link><a aria-current=page href="/blog" >Blog</a></hf-link>
+    <hf-link><a href="/login" >Login</a></hf-link>
+  </div>
+  <component-list-sidebar class=p0 slot=sidebar></component-list-sidebar>
+  <ui-repl slot=main></ui-repl>
+</hf-responsive-sidebar>
+<script type="module" >
+  import components from "/_public/browser/components.mjs"
+</script>
