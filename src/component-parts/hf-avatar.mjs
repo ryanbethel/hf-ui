@@ -8,14 +8,14 @@ hf-avatar {
   display: inline-block;
   width: var(--avatar-size);
   height: var(--avatar-size);
-  background-color: var(--hf-color-info); 
+  background-color: var(--avatar-background-color, var(--hf-color-primary)); 
   background-size: cover;
   background-position: center;
   border-radius: var(--avatar-radius);
   overflow: hidden;
   text-align: center;
   font-size: var(--hf-font-size-md);
-  color: var(--hf-color-info-text);
+  color: var(--avatar-text-color, var(--hf-color-primary-text));
   line-height: var(--avatar-size);
   position: relative;
   display: flex;
@@ -54,7 +54,6 @@ hf-avatar[text]::before {
   content: attr(text);
   font-size: calc(var(--avatar-size) * .4);
   font-weight: 700;
-  color: var(--hf-color-info-text);
   display: flex;
   align-items: center;
   justify-content: center;

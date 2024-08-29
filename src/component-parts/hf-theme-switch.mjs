@@ -10,14 +10,16 @@ hf-theme-switch {
   label[for=theme-toggle-checkbox] {
     position: relative;
     background-color: var(--hf-color-primary);
-    width: 50px;
-    height: 26px;
+    color: var(--hf-color-primary-text);
+    width: 52px;
+    height: 28px;
     border-radius: 50px;
-    padding: 3px;
+    padding: 2px;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid var(--hf-color-primary-text);
   }
 
   label .ball {

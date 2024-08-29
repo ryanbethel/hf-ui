@@ -1,5 +1,5 @@
 @app
-test-hf-components
+hf-components
 
 @static
 prune true

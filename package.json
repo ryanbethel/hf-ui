@@ -1,13 +1,13 @@
 {
-  "name": "@ryanbethel/e-components",
+  "name": "@htmlfirst/ui",
   "type": "module",
-  "description": "Enhance wrapper for Mdash. Mdash is a design system based on web standards. It's extremely small (see comparison chart), fast, simple, and compatible with any JavaScript framework. \n",
-  "version": "0.0.18",
+  "description": "HTML-First Components",
+  "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ryanbethel/e-components"
+    "url": "https://github.com/ryanbethel/hf-ui"
   },
-  "bugs": "https://github.com/ryanbethel/e-components/issues",
+  "bugs": "https://github.com/ryanbethel/hf-ui/issues",
   "main": "index.js",
   "files": [
     "index.js",
@@ -23,7 +23,7 @@
   "contributors": [
     {
       "name": "Ryan Bethel",
-      "url": "https://github.com/ryanbethel/e-components"
+      "url": "https://github.com/ryanbethel/hf-ui"
     }
   ],
   "keywords": [

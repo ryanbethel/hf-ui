@@ -13,7 +13,7 @@ export default function Head({ req }) {
         <link rel="icon" href="/_public/favicon.svg" />
 
         ${edash ? `
-        <link rel="stylesheet" href="/_public/hf-global-custom-properties.css" />
+        <link rel="stylesheet" href="/_public/hf-color-mode.css" />
         ` : `
         ${getStyles.linkTag()}
         `}

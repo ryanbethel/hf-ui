@@ -45,6 +45,7 @@ export default {
       gray: "#808080"
     },
     spots: {
+      "hf-color-gray-0": "hsl(0, 0%, 95%)",
       "hf-color-gray-1": "var(--gray100)",
       "hf-color-gray-2": "var(--gray200)",
       "hf-color-gray-3": "var(--gray300)",
@@ -54,6 +55,7 @@ export default {
       "hf-color-gray-7": "var(--gray700)",
       "hf-color-gray-8": "var(--gray800)",
       "hf-color-gray-9": "var(--gray900)",
+      "hf-color-gray-10": "hsl(0, 0%, 7%)",
 
       "hf-color-info-1": "#d8ebfe",
       "hf-color-info-2": "#6990ee",

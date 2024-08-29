@@ -1,0 +1,174 @@
+:root {
+
+
+  /* Derived Colors: Set from other colors */
+  --hf-color-well-surface: var(--hf-color-gray-1);
+  --hf-color-background-surface: var(--hf-color-gray-1);
+  --hf-color-elevated-surface: var(--hf-color-gray-0);
+
+  --hf-color-surface-text: var(--hf-color-gray-9);
+  --hf-color-surface-subtext: var(--hf-color-gray-7);
+
+  --hf-color-info-text: var(--hf-color-alert-text);
+  --hf-color-success-text: var(--hf-color-alert-text);
+  --hf-color-error-text: var(--hf-color-alert-text);
+  --hf-color-warning-text: var(--hf-color-alert-text);
+
+
+  --hf-color-disabled-fg: var(--hf-color-gray-5);
+  --hf-color-disabled-bg: var(--hf-color-gray-2);
+
+  --hf-color-focus: var(--hf-color-info);
+  --hf-color-border: var(--hf-color-gray-3);
+
+  
+  --hf-color-code-text: var(--hf-color-surface-text);
+
+  --hf-color-tag: var(--hf-color-info);
+  --hf-color-tag-text: var(--hf-color-info-text);
+
+
+  /* Uses the "space toggles" technique to set all light/dark values */
+  --hf-color-mode: var(--hf-light-mode); /* set default light mode */
+  --hf-light-mode: var(--hf-color-mode,); 
+  --hf-dark-mode: var(--hf-color-mode,); 
+
+
+  color-scheme: 
+    var(--hf-light-mode, light)
+    var(--hf-dark-mode, dark);
+
+  /* Uses the "space toggles" technique to set all light/dark values */
+  --hf-color-gray-0: 
+    var(--hf-light-mode, hsl(0, 0%, 95%))
+    var(--hf-dark-mode, hsl(0, 0%, 7%));
+  --hf-color-gray-1: 
+    var(--hf-light-mode, hsl(0, 0%, 90%))
+    var(--hf-dark-mode, hsl(0, 0%, 10%));
+  --hf-color-gray-2:  
+    var(--hf-light-mode, hsl(0, 0%, 80%))
+    var(--hf-dark-mode, hsl(0, 0%, 20%));
+  --hf-color-gray-3:  
+    var(--hf-light-mode, hsl(0, 0%, 70%))
+    var(--hf-dark-mode, hsl(0, 0%, 30%));
+  --hf-color-gray-4:  
+    var(--hf-light-mode, hsl(0, 0%, 60%))
+    var(--hf-dark-mode, hsl(0, 0%, 40%));
+  --hf-color-gray-5: 
+    var(--hf-light-mode, hsl(0, 0%, 50%))
+    var(--hf-dark-mode, hsl(0, 0%, 50%));
+  --hf-color-gray-6: 
+    var(--hf-light-mode, hsl(0, 0%, 40%))
+    var(--hf-dark-mode, hsl(0, 0%, 60%));
+  --hf-color-gray-7: 
+    var(--hf-light-mode, hsl(0, 0%, 30%))
+    var(--hf-dark-mode, hsl(0, 0%, 70%));
+  --hf-color-gray-8: 
+    var(--hf-light-mode, hsl(0, 0%, 20%))
+    var(--hf-dark-mode, hsl(0, 0%, 80%));
+  --hf-color-gray-9: 
+    var(--hf-light-mode, hsl(0, 0%, 10%))
+    var(--hf-dark-mode, hsl(0, 0%, 90%));
+  --hf-color-gray-10: 
+    var(--hf-light-mode, hsl(0, 0%, 7%)) 
+    var(--hf-dark-mode, hsl(0, 0%, 95%)); 
+
+}
+
+:root.dark-mode:not(#id-4-specificity) {
+  --hf-color-mode: var(--hf-dark-mode);
+}
+:root.light-mode:not(#id-4-specificity) {
+  --hf-color-mode: var(--hf-light-mode);
+}
+
+/* theme switch */
+:root:has(input[name=theme-toggle]:checked) {
+  --hf-color-mode: var(--hf-dark-mode);
+}
+
+/* theme switch */
+:root:has(input[name=theme-toggle]:not(:checked)) {
+  --hf-color-mode: var(--hf-light-mode);
+}
+
+/* selectors for theme-menu */
+:root:has(input[type=radio][name=theme][value=dark]:checked) {
+  --hf-color-mode: var(--hf-dark-mode);
+}
+:root:has(input[type=radio][name=theme][value=light]:checked) {
+  --hf-color-mode: var(--hf-light-mode);
+}
+:root:has(input[type=radio][name=theme][value=auto]:checked) {
+  color-scheme: light dark;
+}
+
+
+@media ( prefers-color-scheme: dark ) {
+  :root {
+    --hf-color-mode: var(--hf-dark-mode);
+  }
+}
+
+
+:root {
+
+
+  /*----------------------------------*/
+  --hf-color-primary: hsl(202,  67%, 45%);
+  --hf-color-primary: #FF9800;
+  --hf-color-primary: #4CAF50;
+  --hf-color-primary: hsl(123, 43%, 45%);
+  --hf-color-primary: #268630;
+  --hf-color-primary: hsl(123, 43%, 34%);
+  --hf-color-primary-contrast: hsl(202,  67%, 30%);
+  --hf-color-primary-contrast: #F57C00;
+  --hf-color-primary-contrast: #388E3C;
+  --hf-color-primary-contrast: hsl(123, 43%, 29%);
+  --hf-color-primary-contrast: #3d9942;
+  --hf-color-primary-text: hsl(0,0%,95%);
+
+  --hf-color-alert-text: hsl(0, 0%, 20%);
+
+  --hf-color-info: #c4dffb;
+  --hf-color-info-contrast: #6990ee;
+  
+  --hf-color-error: #fce2de;
+  --hf-color-error-contrast: #eb6176;
+
+  --hf-color-success: #ccf3ca;
+  --hf-color-success-contrast: #26a573;
+
+  --hf-color-warning: #f6e5bb;
+  --hf-color-warning-contrast: #e36f4f;
+
+
+  /* Borders */
+  --hf-border-radius-sm: 2px;
+  --hf-border-radius-md: 4px;
+  --hf-border-radius-lg: 8px;
+  --hf-border-radius-full: 9999px;
+
+  /* Other */
+  --hf-max-content-width: 1320px; 
+  --hf-input-min-height: 2.125rem; 
+
+  /* spacing */
+  --hf-space-xs: .375rem;
+  --hf-space-sm: .75rem;
+  --hf-space-default: 1rem;
+  --hf-space-md: 1.125rem;
+  --hf-space-lg: 1.5rem;
+  --hf-space-xl: 3rem;
+
+  /* Font */
+  --hf-font-size-min: .8125rem; /* WCAG recommendation */
+  --hf-font-size-default: 1rem;
+  --hf-font-size-md: 1.125rem;
+  --hf-font-size-lg: 1.5rem;
+  --hf-font-size-xl: 2rem;
+
+  --hf-header-height: 3em;
+  --hf-header-font-size: var(--hf-font-size-md);
+}
+

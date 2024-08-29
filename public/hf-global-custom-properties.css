@@ -95,6 +95,7 @@
   --hf-color-gray-10: hsl(0, 0%, 7%); 
 }
 :root:has(input[type=radio][name=theme][value=auto]:checked) {
+  color-scheme: light dark;
 }
 
 :root {
@@ -139,8 +140,17 @@
 
   /*----------------------------------*/
   --hf-color-primary: hsl(202,  67%, 45%);
+  --hf-color-primary: #FF9800;
+  --hf-color-primary: #4CAF50;
+  --hf-color-primary: hsl(123, 43%, 45%);
+  --hf-color-primary: #268630;
+  --hf-color-primary: hsl(123, 43%, 34%);
   --hf-color-primary-contrast: hsl(202,  67%, 30%);
-  --hf-color-primary-text: white;
+  --hf-color-primary-contrast: #F57C00;
+  --hf-color-primary-contrast: #388E3C;
+  --hf-color-primary-contrast: hsl(123, 43%, 29%);
+  --hf-color-primary-contrast: #3d9942;
+  --hf-color-primary-text: hsl(0,0%,95%);
 
   --hf-color-alert-text: hsl(0, 0%, 20%);
 
