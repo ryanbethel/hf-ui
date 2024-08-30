@@ -1,5 +1,5 @@
 @app
-HF-UI
+hf-ui
 
 @static
 prune true

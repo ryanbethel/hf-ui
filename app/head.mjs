@@ -15,11 +15,11 @@ export default function Head({ req }) {
 
         ${!paramour ? `
         <link rel="stylesheet" href="/_public/hf-color-mode.css" />
-        <link rel="stylesheet" href="/_public/hf-global-custom-properties.css" />
+        <link rel="stylesheet" href="/_public/hf-custom-properties.css" />
         ` : `
         ${getStyles.linkTag()}
         `}
-        <link rel="stylesheet" href="/_public/hf-global-basic-reset.css" />
+        <link rel="stylesheet" href="/_public/hf-basic-reset.css" />
   <meta
     name="description"
     content="The HTML first full stack web framework."
