@@ -11,15 +11,12 @@ const components = [
       <summary>Summary</summary>
       <p>Details about this thing</p>
     </details>
-</hf-accordion>
-
-
-` },
+</hf-accordion>` },
   {
     name: "Responsive Header",
-    path: "responsivhf-header",
+    path: "responsive-header",
     exampleUsage: `
-<hf-responsivhf-header style="--header-background-color:var(--hf-color-gray-9); --header-color:var(--hf-color-gray-1);">
+<hf-responsive-header >
   <img slot=logo src="https://picsum.photos/24" alt="logo">
   <p slot=domain>Example.com</p>
   <div slot=nav-items>
@@ -32,7 +29,7 @@ const components = [
     name: "Responsive Sidebar",
     path: "responsive-sidebar",
     exampleUsage: `
-<hf-responsive-sidebar style="--header-background-color:var(--hf-color-gray-9); --header-color:var(--hf-color-gray-1);">
+<hf-responsive-sidebar >
   <img slot=logo src="https://picsum.photos/24" alt="logo">
   <p slot=domain>brand.com</p>
   <div slot=nav-items>
@@ -90,21 +87,17 @@ const components = [
   {
     name: "Blockquote",
     path: "blockquote",
-    exampleUsage: `
-<hf-blockquote>
-  <blockquote>Someone said something.</blockquote>
-</hf-blockquote>
-`},
+    exampleUsage: `<hf-blockquote>Someone said something.</hf-blockquote>`
+  },
   {
-    name: "Breadcrumb", path: "breadcrumb", exampleUsage: `
-  <hf-breadcrumb>
+    name: "Breadcrumb", path: "breadcrumb", exampleUsage: `<hf-breadcrumb>
   <nav>
     <hf-link><a href="#">Home</a></hf-link>
     <hf-link><a href="#">Shoes</a></hf-link>
     <span aria-current="page">Women</span>
   </nav>
 </hf-breadcrumb>
-<hf-seperator></hf-seperator>
+<hf-h-rule></hf-h-rule>
 <hf-breadcrumb>
     <nav>
         <hf-link><a href="#home">Home</a></hf-link>
@@ -143,8 +136,7 @@ const components = [
 </div>
 `},
   {
-    name: "Checkbox", path: "checkbox", exampleUsage: `
-  <hf-input-group>
+    name: "Checkbox", path: "checkbox", exampleUsage: `<hf-input-group>
     <legend>Languages</legend>
     <input id="html" type="checkbox" name="speed" value="html" checked>
     <label for="html">HTML</label>

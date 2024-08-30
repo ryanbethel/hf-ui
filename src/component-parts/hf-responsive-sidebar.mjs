@@ -32,6 +32,7 @@ const elementRenderFunction = /*javascript*/`
 
   .mobile-opener {
     margin-inline-end:1rem;
+    margin-inline-start:1rem;
     display:flex;
     position:relative;
     width:1.5em;
@@ -77,6 +78,11 @@ const elementRenderFunction = /*javascript*/`
     padding-inline: 1rem;
     padding-block: 0;
   }
+
+  .nav-menu * { 
+    color: var(--hf-header-color, var(--default-header-color));
+  }
+
 
   @media only screen and (min-width: \${breakpoint ? breakpoint : '48rem'}) {
 
@@ -153,6 +159,7 @@ const elementRenderFunction = /*javascript*/`
   }
 
   [slot=domain] {
+    white-space: nowrap;
     display: block;
     /*margin-block-start: 1em;
     margin-block-end: 1em;*/
@@ -176,12 +183,12 @@ const elementRenderFunction = /*javascript*/`
         <slot name=logo></slot>
         <slot name=domain></slot>
       </a>
-        <nav class="mobile-opener">
-          <input type="checkbox">
-          <label for="nav-toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>
-          </label>
-        </nav>
+      <nav class="mobile-opener">
+        <input type="checkbox">
+        <label for="nav-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>
+        </label>
+      </nav>
     </hf-col>
     <hf-col span=10>
         <nav class="nav-menu">

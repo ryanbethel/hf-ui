@@ -6,6 +6,9 @@ export default function DemoComponent({ html, state }) {
   :host {
     display:block;
   }
+  hf-link a {
+    color: currentColor;
+  }
 </style>
 <hf-list type=none>
   <ul>

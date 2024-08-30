@@ -1,5 +1,7 @@
-# E- Components for Enhance (inspired by [M-](https://m-docs.org))
-This is a fork of the [MDash](https://m-docs.org) components for use with Enhance.
+# HF UI 
+A set of HTML First UI components
+
+The design of these components is heavily inspired by [MDash](https://m-docs.org) components. 
 It is a work in progress.
 Many changes to come.
 Some components have been changed to take advantage of Enhance features.

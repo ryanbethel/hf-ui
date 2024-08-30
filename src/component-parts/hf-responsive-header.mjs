@@ -135,6 +135,7 @@ const elementRenderFunction = /*javascript*/`
   }
 
   [slot=domain] {
+    white-space: nowrap;
     display: block;
     /*margin-block-start: 1em;
     margin-block-end: 1em;*/
