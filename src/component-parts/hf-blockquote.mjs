@@ -5,6 +5,8 @@ hf-blockquote {
     blockquote {
         color: var(--hf-color-surface-subtext);
         font-style: italic;
+        margin-block: var(--hf-space-default);
+        margin-inline: var(--hf-space-lg);
     }
 }
 `

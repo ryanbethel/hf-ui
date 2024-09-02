@@ -1,23 +1,7 @@
 :root {
 
-  /* gray scale, Set here or with Light/Dark */
-  /*
-  --hf-color-gray-0: hsl(0, 0%, 95%);
-  --hf-color-gray-1: hsl(0, 0%, 90%);
-  --hf-color-gray-2: hsl(0, 0%, 80%);
-  --hf-color-gray-3: hsl(0, 0%, 70%);
-  --hf-color-gray-4: hsl(0, 0%, 60%);
-  --hf-color-gray-5: hsl(0, 0%, 50%);
-  --hf-color-gray-6: hsl(0, 0%, 40%);
-  --hf-color-gray-7: hsl(0, 0%, 30%);
-  --hf-color-gray-8: hsl(0, 0%, 20%);
-  --hf-color-gray-9: hsl(0, 0%, 10%);
-  --hf-color-gray-10: hsl(0, 0%, 7%); 
-  */
-
   --hf-color-primary: hsl(123, 43%, 34%);
-  --hf-color-primary-contrast: hsl(123, 43%, 28%);
-
+  --hf-color-primary-contrast: #3d9942;
   --hf-color-primary-text: hsl(0,0%,95%);
 
   --hf-color-alert-text: hsl(0, 0%, 20%);
@@ -63,29 +47,29 @@
 
 
   /* Borders */
-  --hf-border-radius-sm: 2px;
-  --hf-border-radius-md: 4px;
-  --hf-border-radius-lg: 8px;
-  --hf-border-radius-full: 9999px;
+  --hf-border-radius-sm: var(--borderRadius0); /*2px;*/
+  --hf-border-radius-md: var(--borderRadius1); /*4px;*/
+  --hf-border-radius-lg: var(--borderRadius2); /*8px;*/
+  --hf-border-radius-full: var(--borderRadius3); /*9999px;*/
 
   /* Other */
   --hf-max-content-width: 1320px; 
-  --hf-input-min-height: 2.125rem; 
+  --hf-input-min-height: var(--space6); /* 2.125rem;*/ 
 
   /* spacing */
-  --hf-space-xs: .375rem;
-  --hf-space-sm: .75rem;
-  --hf-space-default: 1rem;
-  --hf-space-md: 1.125rem;
-  --hf-space-lg: 1.5rem;
-  --hf-space-xl: 3rem;
+  --hf-space-xs: calc(.5 * var(--space-2)); /* .375rem; */
+  --hf-space-sm: var(--space-2); /* .75rem;*/
+  --hf-space-default: var(--space0); /* 1rem;*/
+  --hf-space-md: var(--space1); /* 1.125rem;*/
+  --hf-space-lg: var(--space2); /* 1.5rem;*/
+  --hf-space-xl: calc(2 * var(--space2)); /* 3rem;*/
 
   /* Font */
-  --hf-font-size-min: .8125rem; /* WCAG recommendation */
-  --hf-font-size-default: 1rem;
-  --hf-font-size-md: 1.125rem;
-  --hf-font-size-lg: 1.5rem;
-  --hf-font-size-xl: 2rem;
+  --hf-font-size-min: var(--text-2); /* .8125rem;*/ /* WCAG recommendation */
+  --hf-font-size-default: var(--text0); /* 1rem;*/
+  --hf-font-size-md: var(--text1); /* 1.125rem;*/
+  --hf-font-size-lg: var(--text2); /* 1.5rem;*/
+  --hf-font-size-xl: calc(1.33 * var(--text2)); /* 2rem;*/
 
   --hf-header-height: 3em;
   --hf-header-font-size: var(--hf-font-size-md);

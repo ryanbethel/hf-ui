@@ -1,8 +1,8 @@
 :root {
   /* Uses the "space toggles" technique to set all light/dark values */
   --hf-color-mode: var(--hf-light-mode); /* set default light mode */
-  --hf-light-mode: var(--hf-color-mode,); 
-  --hf-dark-mode: var(--hf-color-mode,); 
+  --hf-light-mode: var(--hf-color-mode,); /* trailing comma in var is necessary */
+  --hf-dark-mode: var(--hf-color-mode,); /* trailing comma in var is necessary */
 
 
   color-scheme: 

@@ -13,12 +13,13 @@ export default function Head({ req }) {
         <title>Enhance Starter Project</title>
         <link rel="icon" href="/_public/favicon.svg" />
 
-        ${!paramour ? `
-        <link rel="stylesheet" href="/_public/hf-color-mode.css" />
-        <link rel="stylesheet" href="/_public/hf-custom-properties.css" />
-        ` : `
+        ${paramour ? `
         ${getStyles.linkTag()}
+        <link rel="stylesheet" href="/_public/hf-custom-properties-paramour.css" />
+        ` : `
+        <link rel="stylesheet" href="/_public/hf-custom-properties.css" />
         `}
+        <link rel="stylesheet" href="/_public/hf-color-mode.css" />
         <link rel="stylesheet" href="/_public/hf-basic-reset.css" />
   <meta
     name="description"
