@@ -17,6 +17,7 @@
     "/dist/elements-mjs/",
     "/dist/components/",
     "/public/hf-custom-properties.css",
+    "/public/hf-custom-properties-paramour.css",
     "/public/hf-color-mode.css",
     "/public/hf-basic-reset.css",
     "/public/initialize-dark-light.js",
