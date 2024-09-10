@@ -88,7 +88,7 @@ const elementRenderFunction = /*javascript*/`
     padding-block: 1rem;
   }
 
-  .nav-menu * { 
+  .nav-menu [slot=nav-items] > hf-link > a { 
     color: var(--hf-header-color, var(--default-header-color));
   }
 
