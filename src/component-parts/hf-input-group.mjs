@@ -108,12 +108,12 @@ const cssString = /*css*/`
       }
 
       & :is(input, select, textarea) {
-        &:invalid,
+        &:user-invalid,
         &[invalid] {
-          border-color: var(--hf-color-error);
+          border-color: var(--hf-color-error-contrast);
 
           & ~ small {
-            color: var(--hf-color-error);
+            color: var(--hf-color-error-contrast);
           }
         }
 
