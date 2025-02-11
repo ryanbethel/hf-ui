@@ -83,7 +83,7 @@ const cssString = /*css*/`
 
         &[aria-pressed="true"],
         &[aria-pressed="mixed"] {
-          background-color: var(--hf-color-info);
+          background-color: var(--hf-color-gray-4);
         }
       }
 

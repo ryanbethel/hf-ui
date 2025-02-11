@@ -18,7 +18,7 @@ hf-tag {
     /* Removable tag */
   & :is(hf-button:has(button[type="remove"]), button[type=remove]) {
         padding-left: var(--hf-space-xs);
-        font-size: var(--hf-font-size-default);
+        font-size: var(--hf-font-size-sm);
         width: auto;
     }
 }
