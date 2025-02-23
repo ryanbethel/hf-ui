@@ -1,81 +1,162 @@
 # HF UI 
-A set of HTML First UI components
+A set of HTML First UI web components for SSR and CSR in any Framework or Language
 
-The design of these components is heavily inspired by [MDash](https://m-docs.org) components. 
-It is a work in progress.
-Many changes to come.
-Some components have been changed to take advantage of Enhance features.
-For instance M- uses many element styles (i.e. button).
-This version uses a custom element wrapper for many of those (i.e. `<hf-button>`), but because Enhance expands the element you don't need to author the button inside hf-button.
+They are:
+- **Universal** for use with any framework / any language
+- **Dependency free** to copy and paste anywhere
+- **Server-side Rendered** (SSR) by default
+- **Client-side Rendered** for when you need it
+- **Light DOM Web Components** that just work
 
-## Opinions
-- Use attributes to handle state. Enhance includes application state in the form of `state.store`, but this should be reserved for applications. These components do not expect or use the store. This makes them more flexible in other environments where only Enhance SSR is used (including Enahance SSR WASM).
-- Customization and configuration of these components is done primarily with custom properties. 
+They work especially well with [Enhance](enhance.dev). The design was inspired by [MDash](https://m-docs.org). See [Acknowledgements](#acknowledgements) for related projects and resources.
 
+## Table of Contents 
+1. stuff
 
-## Usage
-To use the components first install the package:
+## Server-side and Client-side Rendered
+HF-UI components can be rendered on the server or on the client. If a component is server rendered in a page it inserts the needed styles and behavior(JavaScript) to define that component if that same component is later client-side rendered on that page. If the component has not been first server-side rendered it needs to be sent with the page so that it is defined when it needs to be rendered. 
+
+## Getting Started
+For an enhance project the quickest way to try out the components in your project is:
+1. Install the components
+2. Copy the static asset files to your public folder and document head. (`public/hf-basic-reset.css`, `public/hf-color-mode`, `public/hf-custom-properties.css`)
+3. Add a component to your project ([usage](#usage))
+
+## Install 
+Individual components can be used without installing by copying them from the `/dist/components` or `/dist/elements` folders. 
+
+To use multiple components you can install from npm:
 ```sh
-npm i @ryanbethel/e-components
+npm i @htmlfirst/ui
 ```
 
-The components can be added to an Enhance project with the `element.mjs` file.
+## Usage
+
+### Add all ssr-elements to an Enhance project
+The ssr-elements can be added to an Enhance project with the `element.mjs` file.
 Add the following `/app/element.mjs` file to your app directory:
 
 ```javascript
 // /app/elements.mjs
-import { elements } from '@ryanbethel/e-components' 
+import { elements } from '@html/ui' 
 export default elements
 ```
+### Use individual ssr-elements in Enhance
+Individual ssr-elements can be used as follows:
+```javascript
+// /app/elements/hf-button.mjs
+import { hfButton } from '@html/ui/dist/elements' 
+export default hfButton
+```
 
-Individual elements can be used with `import {eButton} from '@ryanbethel/e-components/elements.js`. 
-Components are available for clientside use with the [@enhance/custom-element](https://github.com/enhance-dev/custom-element) wrapper. 
-These can be imported with `import {eButton} from '@ryanbethel/e-components/components.js`. 
+### Client side render components with Enhance
+To use a csr-component in the browser with an Enhance project it can be copied directly to the public folder. They are dependency free so no build step is required. Just import them from the page as `<script type=module src="/_public/hf-button.mjs"></script>`. 
+
+If you want to use multiple components and combine them into one script you can use the `app/browser` folder to bundle them into the `public/browser` folder as follows:
+
+```javascript
+// app/browser/my-page.mjs
+import {hfButton,hfCard} from '@htmlfirst/ui/components.js'
+```
+
+```html
+<!-- My Page -->
+ <body>
+   <div>stuff</div>
+   <script type=module src="/_public/browser/my-page.mjs"></script>
+  </body>
+ ```
+
+## Customize with Custom Properties
+The components can be customized by setting values on a set of custom properties. This gives a little flexibility without being too overwhelming. For an Enhance project copy the `public/hf-custom-properties.css` file into your projects public folder. Or if using another framework put the file wherever static assets are served from. Most of the properties are colors with a few sizes for fonts and spacing. 
+
+## Use with other style libraries
+The HF-UI components can be used with other style systems. They work especially well alongside utility style systems like Paramour (formerly called Enhance styles). They can be used with Tailwind as well. 
+
+## Style reset
+There is a very minimal style reset used for the example site. There are intentionally few additional styles so that the components can be seen as they are. The reset `public/hf-reset.css` can be copied to your projects static asset folder. 
+ 
 
 ## Docs/Examples
 An example app showing all components is included in the project directory.
 You can fork the repo and run `npm start` to see it. 
 http://localhost:3333 is a page that includes most of the components used together.
-http://localhost:3333/docs has a repl/playground of the compoents with usage examples.
+http://localhost:3333/docs has a repl/playground of the components with usage examples.
 
-## Global Assets
-A small global style file is needed for all the components.
 
-A simple way to include the global css is to add a `<hf-theme></hf-theme>` tag to every page.
-This tag does not render anything it instead adds a style tag to the head.
+## Enhance Custom-Element (@enhance/custom-element)
 
-Alternatively you can add it by putting the `hf-global.css` in public folder and then in the head as follows. 
+## Use with other frameworks or languages
+- enhance-ssr
+- enhance-ssr for PHP 
+- enhance ssr WASM
 
-```javascript
-// head.mjs
-export default function Head() {
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Enhance Starter Project</title>
-      <link rel="icon" href="/_public/favicon.svg">
-      <link rel="stylesheet" href="/_public/hf-global.css">
-      <meta name="description" content="The HTML first full stack web framework.">
-    </head>
-`
-}
-```
+## Light DOM (no shadow DOM)
 
-## Acknolegements
-- M-Dash
+## Component styles and scoping
+
+## Rendering
+HF-UI components are designed to be rendered anywhere with minimal overhead. For server side rendering using [Enhance](enhance.dev) or in many languages and frameworks using [WASM](enhance.dev/#wasm) drop them into the elements folder and they just work. 
+
+For client side rendering the script for a component is added to the page anywhere and the when the element is added it will render itself. Rendering on the web is a contentious topic. For more background the approach used with HF-UI see ([Rendering Patterns](#rendering-patterns)).
+
+
+## More background
+
+## Component Types
+There are two types of components discussed here. There are application components and UI components. Application components are usually larger and unique to one website. They are a convenient way to break up pieces of an application. They may be reused within a project and even occasionally in multiple projects, but that is not the intent. These components often have application state rendered with them.
+
+In contrast there are UI components (like HF-UI) that are usually smaller primitives that are intended for reuse. In the case of HF-UI they do not use or know anything about application state. They only know about attributes and children (slots). They receive application state when rendered in a page or when they are wrapped into a larger application component.
+
+Layout components are another category. These are often application components, but they may also be UI components (i.e. a generic header or sidebar component). What is true is that in a multi page app these layout components are almost never client side rendered. These are specifically the foundational parts of a page that would come from the server.
+
+
+
+
+
+## Rendering Patterns
+
+### Server-side Rendering
+On the web platform servers communicate to browsers by sending HTML documents. 
+Even modern JavaScript frameworks send an HTML document `<div id=app></div><script>/*app code*/</script>`. 
+
+## Client-side Rendering
+Client side rendering happens when the HTML and or DOM tree it produces is updated in the browser after the HTML document has already arrived in the browser.
+Modern JavaScript frameworks do this for the entire document.
+That `<div id=app></div>` needs to be turned into the full app with many other HTML elements.
+Some of these frameworks now offer their own SSR options but they often end up sending some initial elements that are then "hydrated" which means clientside rendering them again. 
+These JavaScript frameworks also handle routing between pages client rendering every new page (Single Page Apps).
+
+The HF-UI components were designed to work for multi-page apps where each page is a new request to the server returning just that page.
+They can of course be used in single page apps for full CSR but the reverse is not true. React component can not easily be used outside a React application.
+Even with a traditional multi-page app there are some instances where a component might need to be rendered on the client. 
+The biggest reasons to use CSR components in a multi-page app are for lists and special highly interactive pages. For a todo list or any other similar application you often need to add new items to a list and each of those items need to be CSR to save a full page reload. There are also some special pages even in a multi-page app where it is nice to be able to CSR some parts to avoid frequent page reloads.
+
+- Server-side Rendered 
+- Client-side Rendered (after SSR)
+- Client-side Rendered (w/o SSR)
+- Client-side Re-rendering on state change
+  - Attribute change
+  - Re-slotting children
+
+## DOM Diffing 
+
+
+## Opinions
+- Use attributes to handle state. Enhance includes application state in the form of `state.store`, but this should be reserved for applications. These components do not expect or use the store. This makes them more flexible in other environments where only Enhance SSR is used (including Enhance SSR WASM).
+- Customization and configuration of these components is done primarily with custom properties. 
+
+
+
+## Acknowledgements
+- M-Dash: Used for initial inspiration
 - Phosphor Icons
 
 
 ## Color Themes (Light and Dark Mode)
-The components are built with theming in mind. 
-By choosing appropriate colors and adjusting custom properties a working light and dark can be applied. 
-The following recommendations show options for choosing a theme based on OS default or user selection.
-This preference can be persisted through local storage. 
+The components are built with theming in mind. By choosing appropriate colors and adjusting custom properties a working light and dark can be applied. The following recommendations show options for choosing a theme based on OS default or user selection. This preference can be persisted through local storage. 
 
-The primary way that components adapt to a light and dark them is by use of the scale of Gray (or other nutral) color.
+The primary way that components adapt to a light and dark them is by use of the scale of Gray (or other neutral) color.
 The user configuration requires custom property values for the neutral color from `--hf-color-gray-0` to `--hf-color-gray-10`.
 For light mode this range should be set with light on the low end and dark on the high end.
 For dark mode the range is reversed. 
