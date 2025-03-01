@@ -39,11 +39,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfDot extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-dot')) {
+    customElements.define('hf-dot', HfDot)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-dot', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-dot', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfDot extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-dot')) {
+    customElements.define('hf-dot', HfDot)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

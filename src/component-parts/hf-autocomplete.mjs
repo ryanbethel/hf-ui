@@ -171,28 +171,26 @@ ${indentChunk(cssString)}
 </style>
 ${markupString}
 <script type="module">
-  class EAutoComplete extends HTMLElement {
+  class HfAutoComplete extends HTMLElement {
 ${indentChunk(scriptString)}
   }
-  if (!customElements.get('hf-autocomplete')) {customElements.define("hf-autocomplete", EAutoComplete)}
+  if (!customElements.get('hf-autocomplete')) {customElements.define("hf-autocomplete", HfAutoComplete)}
 </script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-autocomplete', htmlString: elementHTML })
 
 const componentFunctionString = /*javascript*/`
-import CustomElement from '/_public/browser/custom-element.mjs'
-export default class EAutocomplete extends CustomElement {
+export default class HfAutocomplete extends HTMLElement {
 ${indentChunk(scriptString, '    ')}
-    render({ html, state }) {
-      return html\`
-        <style scope="global">
-        ${indentChunk(cssString)}
-        </style>
-        ${markupString}
-      \`}
 }
-if (!customElements.get('hf-autocomplete')) { customElements.define("hf-autocomplete", AutoComplete) };
+if (!customElements.get('hf-autocomplete')) { 
+  customElements.define("hf-autocomplete", HfAutoComplete)
+
+  const style = document.createElement('style');
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style);
+};
 `
 
 export default {

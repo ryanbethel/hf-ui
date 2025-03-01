@@ -1,4 +1,4 @@
-import { funWrapHTMLElement, wrapComponentCE, escString, indentChunk } from "../wrappers.mjs"
+import { funWrapHTMLElement, escString, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
 hf-accordion {
@@ -120,28 +120,27 @@ ${indentChunk(cssString)}
 </style>
 ${markupString}
 <script type=module>
-  class EAccordion extends HTMLElement {
+  class HfAccordion extends HTMLElement {
 ${indentChunk(scriptString)}
   }
-  if(!customElements.get('hf-accordion')) { customElements.define('hf-accordion', EAccordion) }
+  if(!customElements.get('hf-accordion')) { customElements.define('hf-accordion', HfAccordion) }
 </script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-accordion', htmlString: elementHTML })
 
+
 const componentFunctionString = /*javascript*/`
-import CustomElement from '/_public/browser/custom-element.mjs'
-export default class EAccordion extends CustomElement {
+export default class HfAccordion extends HTMLElement {
 ${indentChunk(scriptString, '    ')}
-    render({ html, state }) {
-      return html\`
-        <style scope="global">
-        ${indentChunk(cssString)}
-        </style>
-        ${markupString}
-      \`}
 }
-if (!customElements.get('hf-accordion')) {customElements.define("hf-accordion", EAccordion)}
+if (!customElements.get('hf-accordion')) {
+  customElements.define("hf-accordion", HfAccordion)
+
+  const style = document.createElement('style');
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style);
+}
 `
 
 export default {

@@ -1,3 +1,4 @@
+// hf-list Slot Only Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -45,11 +46,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfList extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-list')) {
+    customElements.define('hf-list', HfList)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-list', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-list', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfList extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-list')) {
+    customElements.define('hf-list', HfList)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

@@ -47,11 +47,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfBox extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-box')) {
+    customElements.define('hf-box', HfBox)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-box', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-box', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfBox extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-box')) {
+    customElements.define('hf-box', HfBox)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

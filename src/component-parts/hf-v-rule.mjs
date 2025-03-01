@@ -1,3 +1,4 @@
+// hf-v-rule No Slot Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -17,8 +18,15 @@ hf-v-rule {
 
 const markupString = /*html*/`<hr aria-orientation="vertical" />`
 
-const scriptString = /*javascript*/`
-class EVRule extends HTMLElement {
+const elementHTML = `
+<style scope=global>
+${indentChunk(cssString)}
+</style>
+
+${markupString}
+
+<script type=module>
+class HfVRule extends HTMLElement {
     constructor() { super() }
     connectedCallback() {
       const isEnhanced = this.hasAttribute('enhanced')
@@ -29,24 +37,30 @@ class EVRule extends HTMLElement {
       }
     }
 }
-if (!customElements.get('hf-v-rule')) { customElements.define('hf-v-rule', EVRule) }
-`
-
-const elementHTML = `
-<style scope=global>
-${indentChunk(cssString)}
-</style>
-
-${markupString}
-
-<script type=module>
-${indentChunk(scriptString)}
+if (!customElements.get('hf-v-rule')) { customElements.define('hf-v-rule', HfVRule) }
 </script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-v-rule', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-v-rule', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfHRule extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.hasAttribute('enhanced')
+      // client-side rendering
+      if (!isEnhanced) {
+        this.innerHTML = '<hr aria-orientation="vertical" />'
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+}
+if (!customElements.get('hf-v-rule')) { 
+    customElements.define('hf-v-rule', HfVRule)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

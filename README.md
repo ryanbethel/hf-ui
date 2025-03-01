@@ -261,3 +261,80 @@ This script is intentionally minimal to make sure if a preference is stored it i
   }
 
 ```
+
+
+
+## How It Works
+
+For SSR render HTML
+```html
+<!-- hf-blockquote in HTML form -->
+<style> hf-blockquote { color: blue; } </style>
+<blockquote><slot></slot></blockquote>
+<script type=module>
+  class HfBlockquote extends HTMLElement{
+    constructor(){ super(); }
+    connectedCallback(){ }
+  }
+  if (!customElements.get("hf-blockquote")){ customElements.define('hf-blockquote',HfBlockquote) }
+</script>
+
+```
+
+For SSR followed by CSR
+```html
+<!-- hf-blockquote in HTML form -->
+<style> hf-blockquote { color: blue; } </style>
+<blockquote><slot></slot></blockquote>
+<script type=module>
+  class HfBlockquote extends HTMLElement{
+    constructor(){ super(); }
+    connectedCallback(){ this.clientRender(); }
+    clientRender() {
+      const isEnhanced = this.hasAttribute("enhanced")
+      if (!isEnhanced){
+        // Render on the client as needed
+        this.setAttribute("enhanced","client")
+      }
+    }
+
+  }
+  if (!customElements.get("hf-blockquote")){ customElements.define('hf-blockquote',HfBlockquote) }
+</script>
+
+```
+
+
+For CSR without SSR
+```html
+<script type=module>
+  class HfBlockquote extends HTMLElement{
+    constructor(){ super(); }
+    connectedCallback(){ this.clientRender(); }
+    clientRender() {
+      const isEnhanced = this.hasAttribute("enhanced")
+      if (!isEnhanced){
+        // Render on the client as needed
+        this.setAttribute("enhanced","client")
+      }
+    }
+
+    
+
+  }
+  if (!customElements.get("hf-blockquote")){ 
+    // Insert style into head
+    const style = document.createElement('style');
+    style.textContent = 'hf-blockquote { color: blue; }'
+    document.head.appendChild(style);
+
+    customElements.define('hf-blockquote',HfBlockquote) 
+  }
+</script>
+
+```
+
+
+
+
+Note: For serverside rendered and clientside rendered components that otherwise would not need a custom element defined we can use it as a way to make sure the styles only get added once. If it is serverside rendered it will register the custom element and if the clientside component is added it will not run again because the custom element definition has already run. 

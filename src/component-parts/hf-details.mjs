@@ -1,4 +1,5 @@
-import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
+// hf-details Slot Only Pattern - with no progressive enhancement needed - Style CSR ready
+import { funWrapHTMLElement, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
 hf-details {
@@ -28,11 +29,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfDetails extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-details')) {
+    customElements.define('hf-details', HfDetails)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-details', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-details', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfDetails extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-details')) {
+    customElements.define('hf-details', HfDetails)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

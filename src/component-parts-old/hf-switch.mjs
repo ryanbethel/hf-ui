@@ -1,3 +1,4 @@
+// hf-switch No Slot Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
