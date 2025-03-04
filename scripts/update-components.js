@@ -5,8 +5,8 @@ import { globSync } from 'glob'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const projectDir = join(__dirname, '../../..')
-const srcDir = join(projectDir, '/src/component-parts')
+const projectDir = join(__dirname, '..')
+const srcDir = join(projectDir, 'src','component-parts')
 
 const files = [...globSync(join(srcDir, '*.mjs'))]
 const allComponents = files.map(file => basename(file).replace('.mjs', ''))
@@ -54,4 +54,6 @@ export async function updateAll(){
   }))
 }
 
-
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  await updateAll();
+}

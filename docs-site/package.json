@@ -1,0 +1,24 @@
+{
+  "name": "docs-site",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "author": "Ryan Bethel",
+  "scripts": {
+    "build": "jekyll build --destination .jekyll-build && node scripts/process-enhance.js",
+    "jekyll-watch": "jekyll build --destination .jekyll-build --watch",
+    "enhance-watch": "nodemon --watch .jekyll-build --ext 'html,js,json,mjs,xml' --exec 'node scripts/process-enhance.js'",
+    "serve": "node scripts/livereload.js",
+    "clean": "rm -rf .jekyll-build _site",
+    "dev": "concurrently --kill-others --prefix-colors \"blue,green,red\" --names \"JEKYLL,ENHANCE,LIVERELOAD\" \"npm run jekyll-watch\" \"npm run enhance-watch\" \"npm run serve\""
+  },
+  "devDependencies": {
+    "chokidar": "^4.0.3",
+    "concurrently": "^9.1.2",
+    "connect-livereload": "^0.6.1",
+    "finalhandler": "^1.3.1",
+    "livereload": "^0.9.3",
+    "nodemon": "^3.1.9",
+    "serve-static": "^1.16.2"
+  }
+}

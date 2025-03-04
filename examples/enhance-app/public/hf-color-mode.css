@@ -1,0 +1,83 @@
+:root {
+  /* Uses the "space toggles" technique to set all light/dark values */
+  --hf-color-mode: var(--hf-light-mode); /* set default light mode */
+  --hf-light-mode: var(--hf-color-mode,); /* trailing comma in var is necessary */
+  --hf-dark-mode: var(--hf-color-mode,); /* trailing comma in var is necessary */
+
+
+  color-scheme: 
+    var(--hf-light-mode, light)
+    var(--hf-dark-mode, dark);
+
+  /* Uses the "space toggles" technique to set all light/dark values */
+  --hf-color-gray-0: 
+    var(--hf-light-mode, hsl(0, 0%, 95%))
+    var(--hf-dark-mode, hsl(0, 0%, 7%));
+  --hf-color-gray-1: 
+    var(--hf-light-mode, hsl(0, 0%, 90%))
+    var(--hf-dark-mode, hsl(0, 0%, 10%));
+  --hf-color-gray-2:  
+    var(--hf-light-mode, hsl(0, 0%, 80%))
+    var(--hf-dark-mode, hsl(0, 0%, 20%));
+  --hf-color-gray-3:  
+    var(--hf-light-mode, hsl(0, 0%, 70%))
+    var(--hf-dark-mode, hsl(0, 0%, 30%));
+  --hf-color-gray-4:  
+    var(--hf-light-mode, hsl(0, 0%, 60%))
+    var(--hf-dark-mode, hsl(0, 0%, 40%));
+  --hf-color-gray-5: 
+    var(--hf-light-mode, hsl(0, 0%, 50%))
+    var(--hf-dark-mode, hsl(0, 0%, 50%));
+  --hf-color-gray-6: 
+    var(--hf-light-mode, hsl(0, 0%, 40%))
+    var(--hf-dark-mode, hsl(0, 0%, 60%));
+  --hf-color-gray-7: 
+    var(--hf-light-mode, hsl(0, 0%, 30%))
+    var(--hf-dark-mode, hsl(0, 0%, 70%));
+  --hf-color-gray-8: 
+    var(--hf-light-mode, hsl(0, 0%, 20%))
+    var(--hf-dark-mode, hsl(0, 0%, 80%));
+  --hf-color-gray-9: 
+    var(--hf-light-mode, hsl(0, 0%, 10%))
+    var(--hf-dark-mode, hsl(0, 0%, 90%));
+  --hf-color-gray-10: 
+    var(--hf-light-mode, hsl(0, 0%, 7%)) 
+    var(--hf-dark-mode, hsl(0, 0%, 95%)); 
+
+}
+
+:root.dark-mode:not(#id-4-specificity) {
+  --hf-color-mode: var(--hf-dark-mode);
+}
+:root.light-mode:not(#id-4-specificity) {
+  --hf-color-mode: var(--hf-light-mode);
+}
+
+/* theme switch */
+:root:has(input[name=theme-toggle]:checked) {
+  --hf-color-mode: var(--hf-dark-mode);
+}
+
+/* theme switch */
+:root:has(input[name=theme-toggle]:not(:checked)) {
+  --hf-color-mode: var(--hf-light-mode);
+}
+
+/* selectors for theme-menu */
+:root:has(input[type=radio][name=theme][value=dark]:checked) {
+  --hf-color-mode: var(--hf-dark-mode);
+}
+:root:has(input[type=radio][name=theme][value=light]:checked) {
+  --hf-color-mode: var(--hf-light-mode);
+}
+:root:has(input[type=radio][name=theme][value=auto]:checked) {
+  color-scheme: light dark;
+}
+
+
+@media ( prefers-color-scheme: dark ) {
+  :root {
+    --hf-color-mode: var(--hf-dark-mode);
+  }
+}
+

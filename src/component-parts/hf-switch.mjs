@@ -1,4 +1,4 @@
-// hf-switch No Slot Pattern - with no progressive enhancement needed - Style CSR ready
+// hf-switch Slot With Default Content - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -46,8 +46,8 @@ hf-switch {
 `
 const markupString = /*html*/`<slot><input is=switch type=checkbox /></slot>`
 
-const scriptString = /*html*/`
-class ESwitch extends HTMLElement {
+const scriptString = /*javascript*/`
+class HfSwitch extends HTMLElement {
     constructor() { super() }
     connectedCallback() {
       const isEnhanced = this.hasAttribute('enhanced')
@@ -60,7 +60,7 @@ class ESwitch extends HTMLElement {
       }
     }
 }
-if (!customElements.get('hf-switch')) { customElements.define('hf-switch', ESwitch) }
+if (!customElements.get('hf-switch')) { customElements.define('hf-switch', HfSwitch) }
 `
 
 
@@ -78,7 +78,26 @@ ${indentChunk(scriptString)}
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-switch', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-switch', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfSwitch extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.hasAttribute('enhanced')
+      // client-side rendering
+      if (!isEnhanced) {
+        if (!this.children.length) {
+          this.innerHTML = '<input is=switch type=checkbox />'
+        }
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+}
+if (!customElements.get('hf-switch')) { 
+  customElements.define('hf-switch', HfSwitch)
+  const style = document.createElement('style')
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style)
+ }`
 
 export default {
   elementHTML,
