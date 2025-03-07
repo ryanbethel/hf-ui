@@ -2,9 +2,9 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import chokidar from 'chokidar';
 import enhance from '@enhance/ssr'
-import elements from '../../elements.js'
 const html = enhance({ elements })
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
+import elements from '../_elements/elements.js';
 
 const srcDir = path.join(__dirname, '..', '.jekyll-build');
 const destDir = path.join(__dirname, '..', '_site');
