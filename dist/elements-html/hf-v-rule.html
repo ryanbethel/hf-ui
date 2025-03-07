@@ -1,0 +1,34 @@
+
+<style scope=global>
+  
+  hf-v-rule { 
+      display:flex;
+      height:  auto;
+  
+    hr {
+      background-color: var(--hf-color-gray-3);
+      border: none;
+      margin: 0;
+        width: 1px;
+        height: auto;
+    }
+  }
+  
+</style>
+
+<hr aria-orientation="vertical" />
+
+<script type=module>
+class HfVRule extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.hasAttribute('enhanced')
+      // client-side rendering
+      if (!isEnhanced) {
+        this.innerHTML = '<hr aria-orientation="vertical" />'
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+}
+if (!customElements.get('hf-v-rule')) { customElements.define('hf-v-rule', HfVRule) }
+</script>

@@ -40,8 +40,8 @@
     "enhance"
   ],
   "scripts": {
-    "prepublish": "npm run update-all",
-    "update-all": "npm run clean && node ./scripts/update-all.mjs",
+    "prepublish": "npm run update-components",
+    "update-components": "npm run clean && node ./scripts/update-components.js",
     "clean": "rm -rf ./dist"
   }
 }

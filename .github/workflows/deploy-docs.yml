@@ -24,6 +24,9 @@ jobs:
       with:
         ruby-version: '3.2' 
 
+    - name: Update Components
+      run: node scripts/update-components.js
+
     - name: Install dependencies
       run: |
         npm install

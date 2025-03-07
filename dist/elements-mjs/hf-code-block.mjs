@@ -1,0 +1,47 @@
+
+    export default function hfCodeBlock({html}){
+      return html`
+<style scope=global>
+  
+  /* Base code styles */
+  hf-code {
+    pre {
+      border-radius: var(--hf-border-radius-md);
+      background-color: var(--hf-color-surface-well);
+      color: var(--hf-color-code-text);
+      margin: 0;
+      padding: var(--hf-space-xs) var(--hf-space-sm);
+    }
+  }
+  
+</style>
+
+<pre><slot></slot></pre>
+
+<script type=module>
+  
+  class HfCodeBlock extends HTMLElement {
+      constructor() { super() }
+      connectedCallback() {
+        const isEnhanced = this.getAttribute('enhanced') === '✨'
+        // client-side rendering
+        if (!isEnhanced) {
+          const pre = this.querySelector('pre')
+          if (!pre) {
+              const pre = document.createElement('pre')
+              const children = this.children
+              for (let i = 0; i < children.length; i++) {
+                  pre.appendChild(children[i])
+              }
+              this.appendChild(pre)
+          }
+          this.setAttribute('enhanced', 'client')
+        }
+      }
+  if (!customElements.get('hf-code-block')) { customElements.define('hf-code-block',HfCodeBlock)}
+  }
+  
+</script>
+`
+    }
+  
