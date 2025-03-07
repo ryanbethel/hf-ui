@@ -27,7 +27,10 @@ jobs:
     - name: Update Components
       run: node scripts/update-components.js
 
-    - name: Install dependencies
+    - name: Install root dependencies
+      run: npm install
+
+    - name: Install site build dependencies
       run: |
         npm install
         bundle install
