@@ -13,6 +13,7 @@
     "dev": "concurrently --kill-others --prefix-colors \"blue,green,red\" --names \"JEKYLL,ENHANCE,LIVERELOAD\" \"npm run jekyll-watch\" \"npm run enhance-watch\" \"npm run serve\""
   },
   "devDependencies": {
+    "@enhance/ssr": "^4.0.3",
     "chokidar": "^4.0.3",
     "concurrently": "^9.1.2",
     "connect-livereload": "^0.6.1",

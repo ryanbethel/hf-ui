@@ -1,6 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import chokidar from 'chokidar';
+import enhance from '@enhance/ssr'
+import elements from '../../elements.js'
+const html = enhance({ elements })
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const srcDir = path.join(__dirname, '..', '.jekyll-build');
@@ -8,13 +11,12 @@ const destDir = path.join(__dirname, '..', '_site');
 
 async function enhanceHtmlFile(filePath) {
   try {
-    const data = await fs.readFile(filePath, 'utf8');
-    const comment = '<!-- Processed by Node.js script -->\n';
-    const updatedData = comment + data;
+    const rawHTML = await fs.readFile(filePath, 'utf8');
+    const enhancedHTML = html`${rawHTML}`
 
     const destPath = filePath.replace(srcDir, destDir);
     await fs.mkdir(path.dirname(destPath), { recursive: true });
-    await fs.writeFile(destPath, updatedData, 'utf8');
+    await fs.writeFile(destPath, enhancedHTML, 'utf8');
     console.log(`Processed and copied file: ${destPath}`);
   } catch (err) {
     console.error(`Error processing file ${filePath}:`, err);

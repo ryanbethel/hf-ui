@@ -44,10 +44,12 @@ plugins:
 #
 exclude:
   - .jekyll-build
+  - _site
   - scripts
   - package.json
   - package-lock.json
-  - node_modules
+  - node_modules/
+  - .jekyll-cache/
 # Defult exclude list:
 #   - .sass-cache/
 #   - .jekyll-cache/
