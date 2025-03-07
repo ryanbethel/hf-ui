@@ -23,9 +23,28 @@ async function enhanceHtmlFile(filePath) {
   }
 }
 
-async function copyFile(filePath) {
+async function processAllFiles(directory = srcDir) {
   try {
-    const destPath = filePath.replace(srcDir, destDir);
+    const files = await fs.readdir(directory, { withFileTypes: true });
+    for (const file of files) {
+      const filePath = path.join(directory, file.name);
+      if (file.isDirectory()) {
+        await processAllFiles(filePath);
+      } else if (file.isFile() && path.extname(file.name) === '.html') {
+        await enhanceHtmlFile(filePath);
+      } else {
+        await copyFile(filePath);
+      }
+    }
+  } catch (err) {
+    console.error(`Error processing directory ${directory}:`, err);
+  }
+}
+
+async function copyFile(filePath) {
+  let destPath
+  try {
+    destPath = filePath.replace(srcDir, destDir);
     await fs.mkdir(path.dirname(destPath), { recursive: true });
     await fs.copyFile(filePath, destPath);
     console.log(`Copied file: ${destPath}`);
@@ -35,18 +54,23 @@ async function copyFile(filePath) {
 }
 
 async function removeFile(filePath) {
+  let destPath
   try {
-    const destPath = filePath.replace(srcDir, destDir);
+    console.log({srcDir, destDir, filePath})
+    destPath = filePath.replace(srcDir, destDir);
+    console.log({destPath})
+
     await fs.unlink(destPath);
     console.log(`Removed file: ${destPath}`);
   } catch (err) {
-    console.error(`Error removing file ${destPath}:`, err);
+    console.log(`Error removing file ${destPath}:`, err);
   }
 }
 
 async function removeDir(dirPath) {
+  let destPath
   try {
-    const destPath = dirPath.replace(srcDir, destDir);
+    destPath = dirPath.replace(srcDir, destDir);
     await fs.rmdir(destPath, { recursive: true });
     console.log(`Removed directory: ${destPath}`);
   } catch (err) {
@@ -54,16 +78,28 @@ async function removeDir(dirPath) {
   }
 }
 
-chokidar.watch(srcDir, { ignoreInitial: true }).on('all', async (event, filePath) => {
-  if (event === 'add' || event === 'change') {
-    if (path.extname(filePath) === '.html') {
-      await enhanceHtmlFile(filePath);
-    } else {
-      await copyFile(filePath);
-    }
-  } else if (event === 'unlink') {
-    await removeFile(filePath);
-  } else if (event === 'unlinkDir') {
-    await removeDir(filePath);
+
+const args = process.argv.slice(2);
+const watch = args.includes('--watch') || args.includes('-w');
+
+(async () => {
+  await removeDir(destDir);
+  await processAllFiles();
+
+  if (watch) {
+    console.log('Watching for changes...');
+    chokidar.watch(srcDir, { ignoreInitial: true }).on('all', async (event, filePath) => {
+      if (event === 'add' || event === 'change') {
+        if (path.extname(filePath) === '.html') {
+          await enhanceHtmlFile(filePath);
+        } else {
+          await copyFile(filePath);
+        }
+      } else if (event === 'unlink') {
+        await removeFile(filePath);
+      } else if (event === 'unlinkDir') {
+        await removeDir(filePath);
+      }
+    })
   }
-});
+})();

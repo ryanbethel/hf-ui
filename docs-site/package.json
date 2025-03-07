@@ -5,9 +5,9 @@
   "type": "module",
   "author": "Ryan Bethel",
   "scripts": {
-    "build": "jekyll build --destination .jekyll-build && node _scripts/process-enhance.js",
+    "build": "jekyll build --destination .jekyll-build ; node _scripts/process-enhance.js",
     "jekyll-watch": "jekyll build --destination .jekyll-build --watch",
-    "enhance-watch": "nodemon --watch .jekyll-build --ext 'html,js,json,mjs,xml' --exec 'node _scripts/process-enhance.js'",
+    "enhance-watch": "node _scripts/process-enhance.js --watch",
     "serve": "node _scripts/livereload.js",
     "clean": "rm -rf .jekyll-build _site",
     "dev": "concurrently --kill-others --prefix-colors \"blue,green,red\" --names \"JEKYLL,ENHANCE,LIVERELOAD\" \"npm run jekyll-watch\" \"npm run enhance-watch\" \"npm run serve\""
