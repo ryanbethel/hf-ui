@@ -43,5 +43,8 @@
     "prepublish": "npm run update-components",
     "update-components": "npm run clean && node ./scripts/update-components.js",
     "clean": "rm -rf ./dist"
+  },
+  "devDependencies": {
+    "glob": "^11.0.1"
   }
 }
