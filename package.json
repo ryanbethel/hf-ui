@@ -41,7 +41,6 @@
   ],
   "scripts": {
     "prepublish": "npm run update-all",
-    "start": "npm run clean && npm run update-all && enhance dev",
     "update-all": "npm run clean && node ./scripts/update-all.mjs",
     "clean": "rm -rf ./dist"
   }
