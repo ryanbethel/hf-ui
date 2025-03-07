@@ -24,11 +24,11 @@ jobs:
       with:
         ruby-version: '3.2' 
 
-    - name: Update Components
-      run: node scripts/update-components.js
-
     - name: Install root dependencies
       run: npm install
+
+    - name: Update Components
+      run: node scripts/update-components.js
 
     - name: Install site build dependencies
       run: |
