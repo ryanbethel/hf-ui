@@ -1,3 +1,4 @@
+// hf-input-group Wrapped Slot Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -132,7 +133,7 @@ const markupString = /*html*/`
 </fieldset>`
 
 const scriptString = /*javascript*/`
-class EInputGroup extends HTMLElement {
+class HfInputGroup extends HTMLElement {
     constructor() { super() }
     connectedCallback() {
       const isEnhanced = this.hasAttribute('enhanced')
@@ -151,7 +152,7 @@ class EInputGroup extends HTMLElement {
       }
     }
 }
-if (!customElements.get('hf-input-group')) { customElements.define('hf-input-group',EInputGroup)}
+if (!customElements.get('hf-input-group')) { customElements.define('hf-input-group',HfInputGroup)}
 `
 
 
@@ -169,7 +170,32 @@ ${indentChunk(scriptString)}
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-input-group', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-input-group', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfInputGroup extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.hasAttribute('enhanced')
+      // client-side rendering
+      if (!isEnhanced) {
+        // should only one child and it is a fieldset once expanded
+        if (this.children.length !== 1 || this.children[0].tagName !== 'FIELDSET') {
+            const fieldset = document.createElement('fieldset')
+            const children = this.children
+            for (let i = 0; i < children.length; i++) {
+                fieldset.appendChild(children[i])
+            }
+            this.appendChild(fieldset)
+        }
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+}
+if (!customElements.get('hf-input-group')) {    
+    customElements.define('hf-input-group',HfInputGroup)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,
