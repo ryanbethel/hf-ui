@@ -81,17 +81,39 @@ hf-avatar:not([text])::before {
 
 const markupString = /*html*/`<slot></slot>`
 
+const scriptString = /*javascript*/`
+class HfAvatar extends HTMLElement {
+  constructor() {
+    super();
+  }
+}`
+
 
 const elementHTML = `
 <style scope=global>
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module">
+${scriptString}
+if (!customElements.get('hf-avatar')) {
+  customElements.define('hf-avatar', HfAvatar);
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-avatar', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-avatar', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+${scriptString}
+if (!customElements.get('hf-avatar')) {
+  customElements.define('hf-avatar', HfAvatar)
+
+  const style = document.createElement('style')
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style)
+}
+`
 
 export default {
   elementHTML,

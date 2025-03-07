@@ -1,3 +1,4 @@
+// hf-code-block Wrapped Slot Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -16,7 +17,7 @@ hf-code {
 const markupString = /*html*/`<pre><slot></slot></pre>`
 
 const scriptString = /*javascript*/`
-class ECodeBlock extends HTMLElement {
+class HfCodeBlock extends HTMLElement {
     constructor() { super() }
     connectedCallback() {
       const isEnhanced = this.getAttribute('enhanced') === '✨'
@@ -34,7 +35,7 @@ class ECodeBlock extends HTMLElement {
         this.setAttribute('enhanced', 'client')
       }
     }
-if (!customElements.get('hf-code-block')) { customElements.define('hf-code-block',ECodeBlock)}
+if (!customElements.get('hf-code-block')) { customElements.define('hf-code-block',HfCodeBlock)}
 }
 `
 
@@ -53,7 +54,33 @@ ${indentChunk(scriptString)}
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-code-block', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-code-block', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfCodeBlock extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.getAttribute('enhanced') === '✨'
+      // client-side rendering
+      if (!isEnhanced) {
+        const pre = this.querySelector('pre')
+        if (!pre) {
+            const pre = document.createElement('pre')
+            const children = this.children
+            for (let i = 0; i < children.length; i++) {
+                pre.appendChild(children[i])
+            }
+            this.appendChild(pre)
+        }
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+if (!customElements.get('hf-code-block')) { 
+  customElements.define('hf-code-block',HfCodeBlock)}
+  const style = document.createElement('style')
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style)
+}`
+
+
 
 export default {
   elementHTML,

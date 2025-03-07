@@ -1,3 +1,4 @@
+// hf-theme-menu No Slots, SSR and CSR ready
 import { funWrapHTMLElement, wrapComponentCE, escString, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -137,8 +138,7 @@ ${indentChunk(scriptString)}
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-theme-menu', htmlString: elementHTML })
 
 const componentFunctionString = /*javascript*/`
-import CustomElement from '/_public/browser/custom-element.mjs'
-export default class ThemeMenu extends CustomElement {
+export default class ThemeMenu extends HTMLElement {
       constructor() {
         super();
         const darkLightTheme = window.localStorage.getItem('dark-light-theme');
@@ -152,6 +152,12 @@ export default class ThemeMenu extends CustomElement {
         } 
       }
       connectedCallback() {
+        const isEnhanced = this.getAttribute('enhanced') === '✨'
+        // client-side rendering
+        if (!isEnhanced) {
+          this.innerHTML = \`${markupString}\`
+          this.setAttribute('enhanced', 'client')
+        }
         this.themeSelector = this.querySelector('input#themhf-toggle-checkbox')
         this.themeSelector?.addEventListener('change', (e) => {
           if (e.target.checked) {
@@ -165,15 +171,13 @@ export default class ThemeMenu extends CustomElement {
           }
         });
       } 
-      render({html,state}){ 
-        return html\`
-<style scope=global>
-${indentChunk(escString(cssString))}
-</style>
-${escString(markupString)}
-    \`
     }
-    if (!customElements.get('hf-theme-menu')) {customElements.define('hf-theme-menu', ThemeMenu);}
+    if (!customElements.get('hf-theme-menu')) {
+    customElements.define('hf-theme-menu', ThemeMenu)
+     const style = document.createElement('style')
+      style.textContent = \`${cssString}\`
+      document.head.appendChild(style)
+    }
     `
 
 export default {

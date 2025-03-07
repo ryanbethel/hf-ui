@@ -1,4 +1,5 @@
-import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
+// hf-row Slot Only Pattern - with no progressive enhancement needed - Style CSR ready
+import { funWrapHTMLElement, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
 /* Inspired by Flexbox Grid https://github.com/kristoferjoseph/flexboxgrid */
@@ -33,11 +34,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfRow extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-row')) {
+    customElements.define('hf-row', HfRow)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-row', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-row', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfRow extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-row')) {
+    customElements.define('hf-row', HfRow)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

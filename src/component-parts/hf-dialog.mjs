@@ -1,3 +1,4 @@
+// hf-dialog Slot Only Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -27,11 +28,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfDialog extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-dialog')) {
+    customElements.define('hf-dialog', HfDialog)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-dialog', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-dialog', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfDialog extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-dialog')) {
+    customElements.define('hf-dialog', HfDialog)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

@@ -26,11 +26,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfBreadcrumb extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-breadcrumb')) {
+    customElements.define('hf-breadcrumb', HfBreadcrumb)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-breadcrumb', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-breadcrumb', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfBreadcrumb extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-breadcrumb')) {
+    customElements.define('hf-breadcrumb', HfBreadcrumb)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

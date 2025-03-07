@@ -1,3 +1,4 @@
+// hf-tag Slot Only Pattern - with no progressive enhancement needed - Style CSR ready
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*css*/`
@@ -32,11 +33,32 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfTag extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-tag')) {
+    customElements.define('hf-tag', HfTag)
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-tag', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-tag', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class HfTag extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-tag')) {
+    customElements.define('hf-tag', HfTag)
+    const style = document.createElement('style')
+    style.textContent = \`${cssString}\`
+    document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,

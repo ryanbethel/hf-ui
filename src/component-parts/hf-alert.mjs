@@ -115,28 +115,26 @@ ${indentChunk(cssString)}
 </style>
 ${markupString}
 <script type="module">
-  class EAlert extends HTMLElement {
+  class HfAlert extends HTMLElement {
 ${indentChunk(scriptString)}
   }
-  if (!customElements.get('hf-alert')) {customElements.define("hf-alert", EAlert)}
+  if (!customElements.get('hf-alert')) {customElements.define("hf-alert", HfAlert)}
 </script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-alert', htmlString: elementHTML })
 
 const componentFunctionString = /*javascript*/`
-import CustomElement from '/_public/browser/custom-element.mjs'
-export default class EAlert extends CustomElement {
+export default class HfAlert extends HTMLElement {
 ${indentChunk(scriptString, '    ')}
-    render({ html, state }) {
-      return html\`
-        <style scope="global">
-        ${indentChunk(cssString)}
-        </style>
-        ${markupString}
-      \`}
 }
-if (!customElements.get('hf-alert')) {customElements.define("hf-alert", EAlert)}
+if (!customElements.get('hf-alert')) {
+  customElements.define("hf-alert", HfAlert)
+
+  const style = document.createElement('style');
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style);
+}
 `
 
 export default {

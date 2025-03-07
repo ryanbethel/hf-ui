@@ -32,16 +32,40 @@ hf-badge {
 
 const markupString = /*html*/`<slot></slot>`
 
+
+
 const elementHTML = `
 <style scope="global">
 ${indentChunk(cssString)}
 </style>
 ${markupString}
+<script type=module>
+class HfBadge extends HTMLElement {
+  constructor() {
+    super();
+  }
+}
+if (!customElements.get('hf-badge')) {
+  customElements.define('hf-badge', HfBadge);
+}
+</script>
 `
 
 const elementFunctionString = funWrapHTMLElement({ tag: 'hf-badge', htmlString: elementHTML })
 
-const componentFunctionString = wrapComponentCE({ tag: 'hf-badge', cssString, markupString })
+const componentFunctionString = /*javascript*/`
+export default class hfBadge extends HTMLElement {
+  constructor() {
+    super();
+  }
+}
+if (!customElements.get('hf-badge')) {
+  customElements.define('hf-badge', HfBadge);
+  
+  const style = document.createElement('style')
+  style.textContent = \`${cssString}\`
+  document.head.appendChild(style)
+}`
 
 export default {
   elementHTML,
