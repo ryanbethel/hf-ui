@@ -184,7 +184,7 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
-script type=module>
+<script type=module>
 class HfButton extends HTMLElement {
     constructor() {
         super()

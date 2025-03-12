@@ -1,0 +1,10 @@
+---
+layout: blank
+---
+
+<hf-responsive-sidebar >
+  {%- include header-nav.html -%}
+  <component-list-sidebar current="{{page.url | split: '/' | last }}" class=p0 slot=sidebar></component-list-sidebar>
+<div slot=main>{{ content }}</div>
+</hf-responsive-sidebar>
+

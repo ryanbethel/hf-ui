@@ -40,7 +40,7 @@ class HfLink extends HTMLElement {
     }
 }
 if (!customElements.get('hf-link')) {
-    customElements.define('hf-link', HfDetails)
+    customElements.define('hf-link', HfLink)
 }
 </script>
 `

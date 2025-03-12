@@ -16,6 +16,7 @@
     "/dist/elements-html/",
     "/dist/elements-mjs/",
     "/dist/components/",
+    "/assets/hf-config.css",
     "/assets/hf-custom-properties.css",
     "/assets/hf-color-mode.css",
     "/assets/hf-basic-reset.css",

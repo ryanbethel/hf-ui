@@ -1,5 +1,6 @@
-export default function demo({ html, state }) {
-  const { demo, current = "accordion" } = state.store
+export default function componentRepl({ html, state }) {
+  const {store,attrs} = state
+  const current = attrs.current || store.current || "accordion"
   return html`
 
 <style scope=global>
@@ -51,7 +52,9 @@ export default function demo({ html, state }) {
     <hf-box class="editor">
       <form action="/docs/_components/${current}" target="previewIframe" method="get">
         <hf-input-group >
-          <textarea name=markup class="codeInput" placeholder="Enter HTML here...">${demo ? demo : ''}</textarea>
+          <slot name="markup">
+            <textarea placeholder="Enter HTML here..."></textarea>
+          </slot>
           <div hidden class=editor></div>
         </hf-input-group>
         <hf-button><button type=submit>Update</button></hf-button>
@@ -70,13 +73,13 @@ export default function demo({ html, state }) {
 </hf-row>
 
 <script type=module>
-  import { EditorView, basicSetup, html, EditorState } from '/_public/browser/editor.mjs'
+  import { EditorView, basicSetup, html, EditorState } from '/assets/editor.mjs'
   class UiRepl extends HTMLElement{
     constructor(){
       super()
     }
     connectedCallback(){
-      this.codeInput = this.querySelector('.codeInput')
+      this.codeInput = this.querySelector('textarea[slot=markup]')
       this.form = this.querySelector('form')
       this.editor = this.querySelector('.editor')
 

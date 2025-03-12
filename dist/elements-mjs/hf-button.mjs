@@ -178,7 +178,7 @@
   
 </style>
 <slot></slot>
-script type=module>
+<script type=module>
 class HfButton extends HTMLElement {
     constructor() {
         super()

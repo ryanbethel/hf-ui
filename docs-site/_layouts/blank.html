@@ -4,13 +4,7 @@
   {%- include head.html -%}
 
   <body>
-    <hf-responsive-header>
-       {%- include header-nav.html -%}
-    </hf-responsive-header>
-
-    <hf-container maxwidth="md">
-        {{ content }}
-    </hf-container>
+    {{ content }}
 
     {% if page.script %}
       <script type="module" src="{{ page.script }}"></script>

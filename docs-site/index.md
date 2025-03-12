@@ -1,3 +1,8 @@
+---
+permalink: /
+layout: default
+title: HTML First UI Components (HF-UI)
+---
 # HTML First UI Components (HF-UI)
 A set of HTML First web components for use in any Framework or Language.
 
@@ -10,17 +15,17 @@ They are:
 
 HF-UI components work especially well with [Enhance](enhance.dev). The design was inspired by [MDash](https://m-docs.org). See [Acknowledgements](#acknowledgements) for other related projects and resources.
 
-## Overview
-HF-UI are web components that follow a few rules to make them server side renderable. 
+## Getting Started
+For an Enhance project:
+1. Install the components:
+   `npm i @htmlfirst/ui`
+2. Copy the static asset files to your `/public` folder and document head. 
+   `cp node_modules/@htmlfirst/ui/assets/hf-config.css public/`
+   `cp node_modules/@htmlfirst/ui/assets/initialize-dark-light.js public/`
+3. Add a component to your project ([usage](#usage))
 
 ## Server-side and Client-side Rendered
 HF-UI components can be rendered on the server or on the client. If a component is server rendered in a page it inserts the needed styles and behavior(JavaScript) to define that component if that same component is later client-side rendered on that page. If the component has not been first server-side rendered it needs to be sent with the page so that it is defined when it needs to be rendered. 
-
-## Getting Started
-For an Enhance project the quickest way to try out the components in your project is:
-1. Install the components
-2. Copy the static asset files to your public folder and document head. (`public/hf-basic-reset.css`, `public/hf-color-mode`, `public/hf-custom-properties.css`)
-3. Add a component to your project ([usage](#usage))
 
 ## Install 
 Individual components can be used without installing by copying them from the `/dist/components` or `/dist/elements` folders. 

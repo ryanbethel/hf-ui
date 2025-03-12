@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 const livereloadServer = livereload.createServer();
 livereloadServer.watch(path.join(__dirname, '../_site'));
 
-const serve = serveStatic(path.join(__dirname, '../_site'), { 'index': ['index.html', 'index.htm'] });
+const serve = serveStatic(path.join(__dirname, '../_site'), { 'index': ['index.html', 'index.htm'], extensions: ['html'] })
 
 const server = http.createServer((req, res) => {
   connectLivereload()(req, res, () => {
