@@ -4,7 +4,12 @@ layout: blank
 
 <hf-responsive-sidebar >
   {%- include header-nav.html -%}
-  <component-list-sidebar current="{{page.url | split: '/' | last }}" class=p0 slot=sidebar></component-list-sidebar>
-<div slot=main>{{ content }}</div>
+  <component-list-sidebar current="{{page.url | split: '/' | last | replace: '.html', '' }}" class=p0 slot=sidebar></component-list-sidebar>
+<div slot=main>
+  <ui-repl>
+    <textarea placeholder="Enter HTML ...">{{content}}</textarea>
+    <div slot=preview>{{content}}</div>
+  </ui-repl>
+</div>
 </hf-responsive-sidebar>
 

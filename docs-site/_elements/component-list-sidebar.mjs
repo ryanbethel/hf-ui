@@ -2,7 +2,7 @@ export default function componentList({ html, state }) {
   const {store,attrs} = state
   const current = attrs.current || store.current
   const commonPath = '/components/'
-  const components = store.components || [
+  const components = [
     {name: "Accordion", path: "accordion"},
     {name: "Alert", path: "alert"},
     {name: "Autocomplete", path: "autocomplete"},
@@ -39,12 +39,13 @@ export default function componentList({ html, state }) {
     {name: "Vertical Rule", path: "v-rule"},
   ]
   return html`
-<style>
-  :host {
+<style scope=global>
+  component-list-sidebar {
     display:block;
-  }
-  hf-link a {
-    color: currentColor;
+
+    hf-link a {
+      color: currentColor;
+    }
   }
 </style>
 <hf-list type=none>

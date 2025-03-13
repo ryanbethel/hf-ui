@@ -63,11 +63,7 @@ export default function componentRepl({ html, state }) {
   </hf-col>
   <hf-col span="6">
     <hf-box class="preview">
-      <iframe
-        name="previewIframe"
-        title="Preview"
-        src="/docs/_components/${current}">
-      </iframe>
+      <slot name="preview"></slot>
     </hf-box>
   </hf-col>
 </hf-row>
