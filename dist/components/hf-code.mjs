@@ -23,7 +23,7 @@ if (!customElements.get('hf-code')) {
     customElements.define('hf-code',HfCode)}
     const style = document.createElement('style')
     style.textContent = `
- e-code {
+ hf-code {
    code {
      border-radius: var(--hf-border-radius-md);
      background-color: var(--hf-color-surface-well);

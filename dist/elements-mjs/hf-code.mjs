@@ -3,7 +3,7 @@
       return html`
 <style scope=global>
   
-   e-code {
+   hf-code {
      code {
        border-radius: var(--hf-border-radius-md);
        background-color: var(--hf-color-surface-well);

@@ -2,7 +2,7 @@
 import { funWrapHTMLElement, wrapComponentCE, indentChunk } from "../wrappers.mjs"
 
 const cssString = /*html*/`
- e-code {
+ hf-code {
    code {
      border-radius: var(--hf-border-radius-md);
      background-color: var(--hf-color-surface-well);
