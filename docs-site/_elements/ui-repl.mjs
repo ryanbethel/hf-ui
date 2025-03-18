@@ -50,15 +50,10 @@ export default function componentRepl({ html, state }) {
 <hf-row >
   <hf-col span="6" >
     <hf-box class="editor">
-      <form action="/docs/_components/${current}" target="previewIframe" method="get">
-        <hf-input-group >
           <slot name="markup">
             <textarea placeholder="Enter HTML here..."></textarea>
           </slot>
           <div hidden class=editor></div>
-        </hf-input-group>
-        <hf-button><button type=submit>Update</button></hf-button>
-      </form>
     </hf-box>
   </hf-col>
   <hf-col span="6">
@@ -76,9 +71,9 @@ export default function componentRepl({ html, state }) {
     }
     connectedCallback(){
       this.codeInput = this.querySelector('textarea[slot=markup]')
-      this.form = this.querySelector('form')
       this.editor = this.querySelector('.editor')
-
+      this.preview = this.querySelector('div[slot=preview]')
+      this.textarea = this.querySelector('textarea[slot=markup]')
 
       this.codeInput.addEventListener('input', () => {
           clearTimeout(this.timeoutId);
@@ -88,14 +83,13 @@ export default function componentRepl({ html, state }) {
       });
 
       try {
-
-      let codeMirror= new EditorView({
-        state: EditorState.create({
-            doc: this.codeInput.value || '',
-            extensions: [basicSetup, html()]
-        }),
-        parent: this.editor
-      })
+        let codeMirror= new EditorView({
+          state: EditorState.create({
+              doc: this.codeInput.value || '',
+              extensions: [basicSetup, html()]
+          }),
+          parent: this.editor
+        })
       
         const debounce = (func, wait) => {
             let timeout;
@@ -108,16 +102,16 @@ export default function componentRepl({ html, state }) {
                 timeout = setTimeout(later, wait);
             };
         }
-      let editor = new EditorView({
-        });
 
-        const updateTextarea = () => {
-            this.codeInput.value = codeMirror.state.doc.toString();
-            this.form.submit()
+        let editor = new EditorView({ });
+
+        const update = () => {
+            const newCode = codeMirror.state.doc.toString();
+            this.codeInput.value = newCode
+            this.preview.innerHTML = newCode
         }
 
-        const debouncedUpdate = debounce(updateTextarea, 500);
-
+        const debouncedUpdate = debounce(update, 500);
 
         codeMirror.dispatch = ((originalDispatch) => {
             return (transaction) => {
@@ -128,7 +122,8 @@ export default function componentRepl({ html, state }) {
             };
         })(codeMirror.dispatch);
 
-      this.form.style.display = "none"
+      this.textarea.style.display = "none"
+      
 
       } catch(error){
         console.error("Editor failed to load")
@@ -141,7 +136,7 @@ export default function componentRepl({ html, state }) {
       this.codeInput.removeEventListener('input')
     }
   }
-  if (!customElements.get('ui-repl')) { customElements.define('ui-repl', UiRepl )}
+  if (!customElements.get('ui-repl')) { customElements.define('ui-repl', UiRepl ) }
 </script>
 
 `}

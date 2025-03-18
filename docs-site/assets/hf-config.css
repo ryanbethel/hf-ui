@@ -20,8 +20,9 @@ body {
 }
 
 h1,h2,h3,h4,h5,h6 { 
-  font-weight: 700;
+  font-weight: bold;
   margin:0; 
+  padding:0;
 }
 
 h1 {font-size:var(--hf-font-size-xl);}
@@ -156,7 +157,7 @@ h6 {font-size:var(--hf-font-size-min);}
   --hf-color-info: #c4dffb;
   --hf-color-info-contrast: #6990ee;
   
-  --hf-color-error: #fce2de;
+  --hf-color-error: #f9bab0;
   --hf-color-error-contrast: #eb6176;
 
   --hf-color-success: #ccf3ca;
@@ -187,7 +188,7 @@ h6 {font-size:var(--hf-font-size-min);}
   --hf-color-border: var(--hf-color-gray-3);
 
   
-  --hf-color-code-text: var(--hf-color-surface-text);
+  --hf-color-code-text: var(--hf-color-error-contrast);
 
   --hf-color-tag: var(--hf-color-info);
   --hf-color-tag-text: var(--hf-color-info-text);

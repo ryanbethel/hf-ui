@@ -15,13 +15,12 @@ plugins:
   - jekyll-feed
 
 exclude:
-  - scripts
   - package.json
   - package-lock.json
-  - node_modules/
+  - node_modules
   - .jekyll-build
   - _site
-  - _elements/
-  - _scripts/
+  - _elements
+  - _scripts
   - mise.toml
 

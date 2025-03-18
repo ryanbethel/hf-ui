@@ -44,7 +44,11 @@ export default function componentList({ html, state }) {
     display:block;
 
     hf-link a {
-      color: currentColor;
+      color: var(--hf-color-primary-text, currentColor);
+    }
+    hf-list li:not(:has(a)) {
+      text-decoration: underline;
+      color: var(--hf-color-primary-text, currentColor);
     }
   }
 </style>

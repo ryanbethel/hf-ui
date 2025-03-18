@@ -1,0 +1,28 @@
+---
+layout: component
+title: Button
+sub-title: Use to trigger actions
+description: |
+  ## Notes
+  The button component is a wrapper around the native button element.
+  The native button needs to be included as a child of the hf-button. 
+  The native button has attributes required by the platform so it 
+  easier to author it as a child rather than use special attributes on the hf-button 
+  and move them to the native button.
+---
+<p> Ordinal name</p>
+<hf-button ord=primary ><button >Primary</button></hf-button>
+<hf-button ord=secondary ><button >Secondary</button></hf-button>
+<hf-button ord=tertiary ><button >Tertiary</button></hf-button>
+<p>Disabled state</p>
+<hf-button ord=primary ><button disabled>Disabled</button></hf-button>
+<p>Link as button</p>
+<hf-button ord=primary><a role="button" href="/button">Link</a></hf-button>
+<p>Remove type</p>
+<hf-button><button type="remove"></button></hf-button>
+<p>Button group</p>
+<div role="group">
+    <hf-button ord="secondary"><button  aria-pressed="true">One</button></hf-button>
+    <hf-button ord="secondary"><button >Two</button></hf-button>
+    <hf-button ord="secondary"><button >Three</button></hf-button>
+</div>

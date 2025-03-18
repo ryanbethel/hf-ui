@@ -1,0 +1,22 @@
+---
+layout: component
+title: Alert
+sub-title: Displays infomational messages to the user.
+scripts:
+  - /assets/js/components/hf-button.mjs
+description: |
+  ## Notes
+  Can be dismissed by the user. The dismiss requires JavaScript
+  so the dismiss button is added when the component is initialized.
+
+  The alert uses the `hf-button` component for the dismiss button. 
+  If used for CSR the hf-button component needs to be included in the page.
+---
+
+<hf-alert>Neutral message</hf-alert>
+<hf-alert type="info">Informational message</hf-alert>
+<hf-alert type="success">Positive message</hf-alert>
+<hf-alert type="warn">Cautionary message</hf-alert>
+<hf-alert type="error" dismissible="false">
+    Error message with no dismiss button
+</hf-alert>

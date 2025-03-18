@@ -2,14 +2,17 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import chokidar from 'chokidar';
 import enhance from '@enhance/ssr'
-const html = enhance({ elements })
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
-import elements from '../_elements/elements.js';
 
 const srcDir = path.join(__dirname, '..', '.jekyll-build');
 const destDir = path.join(__dirname, '..', '_site');
+const elementsDir = path.join(__dirname, '..', '_elements');
 
 async function enhanceHtmlFile(filePath) {
+  // import inside so that if elements are updated they will be re-imported
+  const elements = (await import('../_elements/elements.js')).default
+  console.log('updated elements')
+  const html = enhance({ elements })
   try {
     const rawHTML = await fs.readFile(filePath, 'utf8');
     const enhancedHTML = html`${rawHTML}`
@@ -83,10 +86,33 @@ const args = process.argv.slice(2);
 const watch = args.includes('--watch') || args.includes('-w');
 
 (async () => {
-  await removeDir(destDir);
-  await processAllFiles();
+  
+  // copy dist/components to /assets/js/components
+  const componentsDir = path.join(__dirname, '..','..', 'dist', 'components');
+  // make sure the _site/assets/js/components directory exists
+  await fs.mkdir(path.join(__dirname, '..', 'assets', 'js', 'components'), { recursive: true });
+  const componentsDestDir = path.join(__dirname, '..', 'assets', 'js', 'components');
+
+  await fs.cp(componentsDir, componentsDestDir, { recursive: true });
+
+  try {
+    await removeDir(destDir);
+  } catch (err) { }
+    await processAllFiles();
 
   if (watch) {
+    try {
+      await fs.mkdir(srcDir, { recursive: true });
+    } catch (err) { }
+    // watch _elements folder and if anything changes run process all files again
+    chokidar.watch(elementsDir, { ignoreInitial: true }).on('all', async (event, filePath) => {
+      try {
+        await removeDir(destDir);
+      } catch (err) { }
+        await processAllFiles();
+    });
+
+
     console.log('Watching for changes...');
     chokidar.watch(srcDir, { ignoreInitial: true }).on('all', async (event, filePath) => {
       if (event === 'add' || event === 'change') {
