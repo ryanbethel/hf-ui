@@ -1,0 +1,22 @@
+---
+layout: component
+title: Tabs
+sub-title: A navigation component for switching between related content sections
+description: |
+  ## Notes
+  The tabs component provides a tabbed interface for organizing related content.
+  
+  - Use `role="tablist"` on the container
+  - Use `role="tab"` on individual tabs
+  - Use `aria-selected="true"` for the active tab
+  - Add `scrollable` attribute for horizontally scrolling tabs
+  - Tabs can be buttons or links
+---
+
+<hf-tabs role="tablist" scrollable>
+  <button role="tab" aria-selected="true">Selected</button>
+  <button role="tab">Not Selected</button>
+  <button role="tab" disabled>Disabled</button>
+  <a href="/" role="tab">Link</a>
+</hf-tabs>
+<p class="txt-xs txt-gray-5">See <hf-link><a href="#select-tab">selecting tabs</a></hf-link> to learn how to select a tab</p> 

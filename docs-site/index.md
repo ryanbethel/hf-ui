@@ -7,7 +7,7 @@ title: HTML First UI Components (HF-UI)
 # HTML First UI Components (HF-UI)
 A set of HTML First web components for use in any Framework or Language.
 
-⚠️ Work in Progress ⚠️
+## ⚠️ Work in Progress ⚠️
 
 ## Goals
 - **Universal** for use with any framework friendly to HTML and any language that supports WASM

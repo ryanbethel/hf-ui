@@ -1,0 +1,38 @@
+---
+layout: component
+title: Breadcrumb
+sub-title: A navigation component showing the current page location
+description: |
+  ## Notes
+  The breadcrumb component helps users understand their current location in a hierarchical navigation structure.
+  
+  - Use `hf-link` for clickable navigation items
+  - Use `aria-current="page"` for the current page
+  - For dropdown menus in breadcrumbs, use `hf-menu` within `hf-crumb`
+---
+
+<hf-breadcrumb>
+  <nav>
+    <hf-link><a href="#">Home</a></hf-link>
+    <hf-link><a href="#">Shoes</a></hf-link>
+    <span aria-current="page">Women</span>
+  </nav>
+</hf-breadcrumb>
+<hf-h-rule></hf-h-rule>
+<hf-breadcrumb>
+    <nav>
+        <hf-link><a href="#home">Home</a></hf-link>
+        <hf-link><a href="#shoes">Shoes</a></hf-link>
+        <hf-crumb>
+            <hf-menu>
+                <span role="link" slot="trigger">Womens ↓</span>
+                <div slot="items">
+                    <hf-link><a href="#womens-casual">👞 Casual</a></hf-link>
+                    <hf-link><a href="#womens-sporty">👟 Sporty</a></hf-link>
+                    <hf-link><a href="#womens-formal">👠 Formal</a></hf-link>
+                </div>
+            </hf-menu>
+        </hf-crumb>
+        <span>Sport</span>
+    </nav>
+</hf-breadcrumb> 

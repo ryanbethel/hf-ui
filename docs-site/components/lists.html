@@ -1,0 +1,49 @@
+---
+layout: component
+title: Lists
+sub-title: Components for displaying ordered and unordered lists
+description: |
+  ## Notes
+  The lists component provides styling for various types of lists.
+  
+  - Use `hf-list` to wrap list elements
+  - Supports unordered (`ul`), ordered (`ol`), and description (`dl`) lists
+  - Use `type="none"` to remove list markers
+  - Use `type="content"` for content-style lists
+---
+
+<hf-list>
+  <ul>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</hf-list>
+<hf-list>
+  <ol>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ol>
+</hf-list>
+<hf-list type="none">
+  <ul>
+    <li>Foo</li>
+    <li>Bar</li>
+    <li>Baz</li>
+  </ul>
+</hf-list>
+<hf-list type="content">
+  <ul>
+    <li class="pad-sm">Foo</li>
+    <li class="pad-sm">Bar</li>
+    <li class="pad-sm">Baz</li>
+  </ul>
+</hf-list>
+<hf-list>
+  <dl>
+    <dt class="pad-sm">Foo</dt>
+    <dt class="pad-sm">Bar</dt>
+    <dt class="pad-sm">Baz</dt>
+  </dl>
+</hf-list> 

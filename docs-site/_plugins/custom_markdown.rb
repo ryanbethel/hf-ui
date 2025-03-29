@@ -18,7 +18,7 @@ module Jekyll
       end
 
       def render_markdown(content)
-        html = Commonmarker.to_html(content, options: { render: { unsafe: true } })
+        html = Commonmarker.to_html(content, options: { render: { unsafe: true, hardbreaks: false } })
         process_html(html)
       end
 
@@ -28,7 +28,7 @@ module Jekyll
        # Customize lists
         doc.css('ul').each do |list|
           custom_list = Nokogiri::XML::Node.new('hf-list', doc)
-          custom_list.set_attribute('type', 'none')
+          # custom_list.set_attribute('type', 'none')
           list.add_next_sibling(custom_list)
           custom_list.add_child(list)
         end

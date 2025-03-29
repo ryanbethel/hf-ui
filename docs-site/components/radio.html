@@ -1,0 +1,23 @@
+---
+layout: component
+title: Radio
+sub-title: A form input component for single selection from multiple options
+description: |
+  ## Notes
+  The radio component allows users to select one option from a group.
+  
+  - Wrap radio buttons in an `hf-input-group`
+  - Use `legend` for group labels
+  - Each radio button should have an associated label
+  - Group related options with the same `name` attribute
+---
+
+<hf-input-group>
+    <legend>Speed</legend>
+    <input type="radio" name="speed" value="slow" id="speed_slow" checked>
+    <label for="speed_slow">Slow</label>
+    <input type="radio" name="speed" value="med" id="speed_med">
+    <label for="speed_med">Medium</label>
+    <input type="radio" name="speed" value="fast" id="speed_fast">
+    <label for="speed_fast">Fast</label>
+</hf-input-group> 

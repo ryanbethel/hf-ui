@@ -1,0 +1,44 @@
+---
+layout: component
+title: Table
+sub-title: A component for displaying tabular data
+description: |
+  ## Notes
+  The table component provides styled tables with optional features.
+  
+  - Use the `striped` attribute for alternating row colors
+  - Use `aria-sort` for sortable columns
+  - Include proper table structure with `thead` and `tbody`
+  - Use button elements in headers for sortable columns
+---
+
+<hf-table>
+<table striped>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th aria-sort="ascending">
+                <button aria-pressed="true">Price</button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Socks</td>
+            <td>$9.99</td>
+        </tr>
+        <tr>
+            <td>Shorts</td>
+            <td>$19.99</td>
+        </tr>
+        <tr>
+            <td>Sweater</td>
+            <td>$29.99</td>
+        </tr>
+        <tr>
+            <td>Shoes</td>
+            <td>$49.99</td>
+        </tr>
+    </tbody>
+</table>
+</hf-table> 

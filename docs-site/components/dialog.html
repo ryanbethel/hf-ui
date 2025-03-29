@@ -1,0 +1,22 @@
+---
+layout: component
+title: Dialog
+sub-title: A modal dialog component for displaying content that requires attention
+description: |
+  ## Notes
+  The dialog component creates a modal overlay that focuses user attention on specific content.
+  
+  - Uses the native `dialog` element
+  - Call `showModal()` to display the dialog
+  - Press `Esc` to close
+  - Can contain any content including headings, text, and interactive elements
+---
+
+<hf-dialog>
+  <dialog>
+    <h2>Title</h2>
+    <p>Put anything you want in here.</p>
+    <p>(press <kbd>Esc</kbd> to close)</p>
+  </dialog>
+</hf-dialog>
+<hf-button ord=primary><button onclick="document.querySelector('dialog').showModal()" >Open Dialog</button></hf-button> 

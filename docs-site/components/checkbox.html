@@ -1,0 +1,23 @@
+---
+layout: component
+title: Checkbox
+sub-title: A form input component for multiple selections
+description: |
+  ## Notes
+  The checkbox component allows users to select multiple options from a list.
+  
+  - Wrap checkboxes in an `hf-input-group`
+  - Use `legend` for group labels
+  - Each checkbox should have an associated label
+  - Use the `checked` attribute for pre-selected options
+---
+
+<hf-input-group>
+    <legend>Languages</legend>
+    <input id="html" type="checkbox" name="speed" value="html" checked>
+    <label for="html">HTML</label>
+    <input id="css" type="checkbox" name="speed" value="css">
+    <label for="css">CSS</label>
+    <input id="js" type="checkbox" name="speed" value="js">
+    <label for="js">JavaScript</label>
+</hf-input-group> 

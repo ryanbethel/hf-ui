@@ -1,0 +1,25 @@
+---
+layout: component
+title: Autocomplete
+sub-title: An input component with autocomplete suggestions
+description: |
+  ## Notes
+  The autocomplete component enhances an input field with suggestion functionality.
+  
+  - Use the `source` attribute to specify the datalist ID
+  - Wrap your input in an `hf-input-group`
+  - Include a `datalist` element with options
+---
+
+<hf-autocomplete source="fruit" placeholder="Slowly type 'apl' to see the behavior">
+  <hf-input-group>
+    <label>Search</label>
+    <input type=text />
+    <datalist id="fruit">
+      <option value="apple"></option>
+      <option value="banana"></option>
+      <option value="cherry"></option>
+      <option value="peach"></option>
+    </datalist>
+  </hf-input-group>
+</hf-autocomplete> 

@@ -1,0 +1,30 @@
+---
+layout: component
+title: Responsive Sidebar
+sub-title: A responsive sidebar layout component
+description: |
+  ## Notes
+  The responsive sidebar provides a layout with a collapsible sidebar and main content area.
+  
+  - Use the `slot=logo` for your brand logo
+  - Use the `slot=domain` for your site name
+  - Use the `slot=nav-items` for navigation links
+  - Use the `slot=sidebar` for sidebar content
+  - Use the `slot=main` for main content
+---
+
+<hf-responsive-sidebar >
+  <img slot=logo src="https://picsum.photos/24" alt="logo">
+  <p slot=domain>brand.com</p>
+  <div slot=nav-items>
+    <hf-link><a aria-current=page href="/blog" >Blog</a></hf-link>
+    <hf-link><a href="/login" >Login</a></hf-link>
+  </div>
+  <hf-list slot=sidebar>
+    <ol>
+      <li><hf-link><a href="/" >Stuff</a></hf-link></li>
+      <li><hf-link><a href="/" >Other Stuff</a></hf-link></li>
+    </ol>
+  </hf-list>
+  <hf-box slot=main>Main Content</hf-box>
+</hf-responsive-sidebar> 

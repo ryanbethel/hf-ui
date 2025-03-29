@@ -122,7 +122,7 @@ class HfMenuElement extends HTMLElement {
 
 }
 
-if (!customElements.get('hf-menu')) { customElements.define("hf-menu", MenuElement) };
+if (!customElements.get('hf-menu')) { customElements.define("hf-menu", HfMenuElement) };
 </script>
 `
 

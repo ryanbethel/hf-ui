@@ -1,0 +1,21 @@
+---
+layout: component
+title: Responsive Header
+sub-title: A responsive navigation header component
+description: |
+  ## Notes
+  The responsive header provides a consistent navigation experience across different screen sizes.
+  
+  - Use the `slot=logo` for your brand logo
+  - Use the `slot=domain` for your site name
+  - Use the `slot=nav-items` for navigation links
+---
+
+<hf-responsive-header >
+  <img slot=logo src="https://picsum.photos/24" alt="logo">
+  <p slot=domain>Example.com</p>
+  <div slot=nav-items>
+    <hf-link><a aria-current=page href="/blog" >Blog</a></hf-link>
+    <hf-link><a href="/login" >Login</a></hf-link>
+  </div>
+</hf-responsive-header> 

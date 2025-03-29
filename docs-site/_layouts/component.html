@@ -4,7 +4,7 @@ layout: blank
 
 <hf-responsive-sidebar >
   {%- include header-nav.html -%}
-  <component-list-sidebar current="{{page.url | split: '/' | last | replace: '.html', '' }}" class=p0 slot=sidebar></component-list-sidebar>
+  <component-list-sidebar current="{{page.url | remove_first: '/' | split: '/' | last | replace: '.html', '' }}" class=p0 slot=sidebar></component-list-sidebar>
 <div slot=main>
   <h1>{{ page.title }}</h1>
   <h3>{{ page.sub-title }}</h3>

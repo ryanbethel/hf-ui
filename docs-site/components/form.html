@@ -1,0 +1,31 @@
+---
+layout: component
+title: Form
+sub-title: A component for organizing form inputs and controls
+description: |
+  ## Notes
+  The form component provides structure and styling for form elements.
+  
+  - Wrap each form control in an `hf-input-group`
+  - Use appropriate input types for better user experience
+  - Include labels for all form controls
+  - Use `small` text for additional information or hints
+---
+
+<form>
+    <hf-input-group>
+        <label>Email</label>
+        <input type="email">
+    </hf-input-group>
+    <hf-input-group>
+        <label>Password</label>
+        <input type="password">
+        <small>Must be at least 8 characters</small>
+    </hf-input-group>
+    <hf-input-group>
+        <label>Address</label>
+        <input placeholder="Street">
+        <input placeholder="Zip" autocomplete="postal-code">
+    </hf-input-group>
+    <hf-button ord="primary"><button type="submit">Save</button></hf-button>
+</form> 

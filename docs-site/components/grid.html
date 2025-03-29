@@ -1,0 +1,36 @@
+---
+layout: component
+title: Grid
+sub-title: A layout component for creating responsive grid layouts
+description: |
+  ## Notes
+  The grid component provides a flexible system for creating column-based layouts.
+  
+  - Use `hf-row` to create a row container
+  - Use `hf-col` for columns within the row
+  - Columns will auto-span by default
+  - Use the `span` attribute to specify column width (1-12)
+  - Add the `center` attribute to `hf-row` to center its contents
+---
+
+<hf-row>
+    <hf-col>
+      <hf-box>This row's columns...</hf-box>
+    </hf-col>
+    <hf-col>
+      <hf-box>...will auto-span.</hf-box>
+    </hf-col>
+</hf-row>
+<hf-row>
+    <hf-col span="4">
+      <hf-box>These two columns...</hf-box>
+    </hf-col>
+    <hf-col span="8">
+      <hf-box>...span an explicit number of columns (4 and 8).</hf-box>
+    </hf-col>
+</hf-row>
+<hf-row center >
+  <hf-col span="4">
+    <hf-box>Centered Row</hf-box>
+  </hf-col>
+</hf-row> 

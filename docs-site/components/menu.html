@@ -1,0 +1,39 @@
+---
+layout: component
+title: Menu
+sub-title: A dropdown menu component for navigation and actions
+description: |
+  ## Notes
+  The menu component creates dropdown menus with customizable content.
+  
+  - Use `slot="trigger"` for the clickable element that opens the menu
+  - Use `slot="items"` for the dropdown content
+  - Can contain links, custom content, and styled elements
+  - Supports flexible width and custom styling
+---
+
+<hf-menu>
+    <hf-button  ord="primary" slot="trigger"><button >Basic Links</button></hf-button>
+    <div slot="items">
+        <hf-link><a>Products</a></hf-link>
+        <hf-link><a>Services</a></hf-link>
+        <hf-link><a>Customer support</a></hf-link>
+    </div>
+</hf-menu>
+<hf-menu>
+    <hf-button  ord="primary" slot="trigger"><button>Custom Content and Width</button></hf-button>
+    <div slot="items" class="pad-sm" style="min-width: 200px">
+        <div class="inline-flex align-items-center">
+            <img src="https://picsum.photos/50" height="51" class="brd-radius-full">
+            <div>
+                <div class="txt-nowrap">Homer J. Simpson</div>
+                <div class="txt-gray-6">Safety Inspector</div>
+            </div>
+        </div>
+        <hr class="mar-t-sm mar-b-sm">
+        <div class="flex flx-col gap-xs">
+            <a>Profile</a>
+            <a>Sign out</a>
+        </div>
+    </div>
+</hf-menu> 

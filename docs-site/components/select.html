@@ -1,0 +1,39 @@
+---
+layout: component
+title: Select
+sub-title: A dropdown selection component for choosing from a list of options
+description: |
+  ## Notes
+  The select component provides a dropdown interface for selecting one or multiple options.
+  
+  - Wrap select elements in an `hf-input-group`
+  - Include a descriptive label
+  - Use `optgroup` to organize related options
+  - Add `multiple` attribute to allow multiple selections
+---
+
+<hf-input-group>
+    <label>Select one</label>
+    <select>
+      <option value="water">Water</option>
+      <option value="coke">Coke</option>
+      <option value="lemonade">Lemonade</option>
+    </select>
+</hf-input-group>
+<hf-input-group>
+    <label>Select many</label>
+    <select name="pets" multiple size="8">
+      <optgroup label="Appetizers">
+        <option value="chips">Chips & salsa</option>
+        <option value="cheese">Cheese platter</option>
+      </optgroup>
+      <optgroup label="Main course">
+        <option value="duck">Duck confit</option>
+        <option value="ribeye">8oz aged ribeye</option>
+      </optgroup>
+      <optgroup label="Dessert">
+        <option value="cake">Cake</option>
+        <option value="ice-cream">Ice-cream</option>
+      </optgroup>
+    </select>
+</hf-input-group> 
