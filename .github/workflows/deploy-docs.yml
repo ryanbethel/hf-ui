@@ -40,9 +40,13 @@ jobs:
       run: npm run build
       working-directory: docs-site
 
+    - name: Prepare deploy
+      run: touch docs-site/_site/.nojekyll
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: docs-site/_site
         publish_branch: gh-pages
+        cname: htmlfirst.dev
