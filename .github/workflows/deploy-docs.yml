@@ -41,7 +41,7 @@ jobs:
       working-directory: docs-site
 
     - name: Prepare deploy
-      run: touch docs-site/_site/.nojekyll
+      run: mkdir -p docs-site/_site && touch docs-site/_site/.nojekyll
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
