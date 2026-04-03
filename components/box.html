@@ -1,0 +1,1228 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/hf-config.css">
+  <script type="module" src="/assets/initialize-dark-light.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="HF-UI HTML First SSR/CSR Components"><style>
+
+  hf-responsive-sidebar {
+    display: block;
+    --default-sidebar-transition: translate 0.25s cubic-bezier(.86,0,.07,1);
+    --default-header-height: 3em;
+    --default-header-background-color: var(--hf-color-primary);
+    --default-header-color: var(--hf-color-primary-text);
+    font-size: var(--hf-header-font-size, var(--hf-font-size-md));
+  }
+
+  hf-responsive-sidebar {
+    [slot=logo] {
+      width:1.5rem;
+      height:1.5rem;
+      margin-inline-end:1rem;
+    }
+
+    header > hf-row {
+      background-color: var(--hf-header-bg-color, var(--default-header-background-color));
+      color: var(--hf-header-color, var(--default-header-color));
+      padding-inline: 1rem;
+      justify-items:center;
+    }
+
+    .mobile-opener {
+      margin-inline-end:1rem;
+      margin-inline-start:1rem;
+      display:flex;
+      position:relative;
+      width:1.5em;
+      height:1.5em;
+      justify-content:flex-end;
+      align-items:center;
+    }
+
+  .mobile-opener input[type=checkbox] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .mobile-opener label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    header:has(.mobile-opener input[type='checkbox']:checked) ~ hf-row > hf-col.sidebar {
+      translate: 0 0;
+    }
+
+    .nav-menu  {
+      background-color: var(--hf-header-bg-color, var(--default-header-background-color));
+      display:flex;
+    }
+    .nav-menu > * {
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      flex-direction:row;
+    }
+    .nav-menu > * > * {
+      padding-inline: 1rem;
+      padding-block: 0;
+    }
+
+    .nav-menu * { 
+      color: var(--hf-header-color, var(--default-header-color));
+    }
+
+  }
+
+  @media only screen and (min-width: 48rem) {
+    hf-responsive-sidebar {
+      .mobile-opener {
+        display:none;
+      }
+    }
+  }
+
+  hf-responsive-sidebar {
+    [aria-current] {
+      border-bottom: 2px solid currentColor;
+    }
+
+    header hf-col {
+      display:flex;
+      align-items:center;
+    }
+    header hf-col + hf-col {
+      justify-content:flex-end;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: var(--hf-header-height, var(--default-header-height));
+      right: 0; /* 50vw for half screen */
+      bottom: 0;
+      left: 0;
+      translate: -100% 0;
+      transition: var(--layout-sidebar-transition, var(--default-sidebar-transition));
+      background-color: var(--hf-header-bg-color, var(--default-header-background-color));
+      z-index: 1000;
+      border-right: 1px solid var(--hf-color-gray-3);
+    }
+
+    .sidebar.sidebar {
+      max-width:100%;
+    }
+
+    @media only screen and (min-width: 48rem) {
+      .sidebar {
+        translate: initial;
+        transition: initial;
+        position:static;
+        display:flex;
+        border-right: 0px ;
+      }
+      .sidebar.sidebar {
+        max-width: calc(100% * 2/12);
+      }
+    }
+
+    /* .sidebar > * { */
+    /*   display:flex; */
+    /*   justify-content:flex-start; */
+    /*   align-items:flex-start; */
+    /*   flex-direction:column; */
+    /* } */
+    /* .sidebar > * { */
+    /*   display:flex; */
+    /*   justify-content:flex-end; */
+    /*   align-items:center; */
+    /*   flex-direction:row; */
+    /* } */
+    /* .sidebar > * > * { */
+    /*   padding-inline: 1rem; */
+    /*   padding-block: 1rem; */
+    /* } */
+    /* .sidebar > * > * { */
+    /*   padding-inline: 1rem; */
+    /*   padding-block: 0; */
+    /* } */
+
+  }
+
+  hf-responsive-sidebar:has(hf-row > hf-col.sidebar > [slot=sidebar]:empty) > header .mobile-opener {
+    display:none;
+  }
+
+  hf-responsive-sidebar {
+    [slot=domain] {
+      white-space: nowrap;
+      display: block;
+      /*margin-block-start: 1em;
+      margin-block-end: 1em;*/
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      min-height:1em;
+      margin-block: calc((var(--hf-header-height, var(--default-header-height)) - 1em)/2);
+    }
+    a:has([slot=logo]) {
+        display:flex; 
+        align-items:center; 
+        text-decoration:unset; 
+        color:currentColor;
+    }
+  }
+  
+
+
+  
+  /* Inspired by Flexbox Grid https://github.com/kristoferjoseph/flexboxgrid */
+  hf-row {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--hf-space-md);
+  
+      & + & {
+          margin-top: var(--hf-space-md);
+      }
+  
+      /* Centers columns inside the row */
+      &[center] {
+          justify-content: center;
+  
+          & hf-col:not([span]) {
+              flex-grow: inherit;
+              flex-basis: inherit;
+          }
+      }
+  }
+  
+
+
+  
+  hf-col,
+  hf-col[indent] {
+      box-sizing: border-box;
+      flex: 0 0 auto;
+  }
+  
+  hf-col {
+      flex-grow: 1;
+      flex-basis: 0;
+      max-width: 100%;
+  
+      /* span sets the width of the column */
+      &[span~="1"] {
+          max-width: 8.33333333%;
+      }
+  
+      &[span~="2"] {
+          max-width: 16.66666667%;
+      }
+  
+      &[span~="3"] {
+          max-width: 25%;
+      }
+  
+      &[span~="4"] {
+          max-width: 33.33333333%;
+      }
+  
+      &[span~="5"] {
+          max-width: 41.66666667%;
+      }
+  
+      &[span~="6"] {
+          max-width: 50%;
+      }
+  
+      &[span~="7"] {
+          max-width: 58.33333333%;
+      }
+  
+      &[span~="8"] {
+          max-width: 66.66666667%;
+      }
+  
+      &[span~="9"] {
+          max-width: 75%;
+      }
+  
+      &[span~="10"] {
+          max-width: 83.33333333%;
+      }
+  
+      &[span~="11"] {
+          max-width: 91.66666667%;
+      }
+  
+      &[span~="12"] {
+          max-width: 100%;
+      }
+  
+      /* indent is used to push columns inward */
+      &[indent="1"] {
+          margin-left: 8.33333333%;
+      }
+  
+      &[indent="2"] {
+          margin-left: 16.66666667%;
+      }
+  
+      &[indent="3"] {
+          margin-left: 25%;
+      }
+  
+      &[indent="4"] {
+          margin-left: 33.33333333%;
+      }
+  
+      &[indent="5"] {
+          margin-left: 41.66666667%;
+      }
+  
+      &[indent="6"] {
+          margin-left: 50%;
+      }
+  
+      &[indent="7"] {
+          margin-left: 58.33333333%;
+      }
+  
+      &[indent="8"] {
+          margin-left: 66.66666667%;
+      }
+  
+      &[indent="9"] {
+          margin-left: 75%;
+      }
+  
+      &[indent="10"] {
+          margin-left: 83.33333333%;
+      }
+  
+      &[indent="11"] {
+          margin-left: 91.66666667%;
+      }
+  
+      &[indent="12"] {
+          margin-left: 100%;
+      }
+  }
+  
+  /* Order is used to reorder columns at specific breakpoints */
+  @media only screen and (max-width: 768px) {
+      hf-col[span~="md-1"] {
+          max-width: 8.33333333%;
+      }
+  
+      hf-col[span~="md-2"] {
+          max-width: 16.66666667%;
+      }
+  
+      hf-col[span~="md-3"] {
+          max-width: 25%;
+      }
+  
+      hf-col[span~="md-4"] {
+          max-width: 33.33333333%;
+      }
+  
+      hf-col[span~="md-5"] {
+          max-width: 41.66666667%;
+      }
+  
+      hf-col[span~="md-6"] {
+          max-width: 50%;
+      }
+  
+      hf-col[span~="md-7"] {
+          max-width: 58.33333333%;
+      }
+  
+      hf-col[span~="md-8"] {
+          max-width: 66.66666667%;
+      }
+  
+      hf-col[span~="md-9"] {
+          max-width: 75%;
+      }
+  
+      hf-col[span~="md-10"] {
+          max-width: 83.33333333%;
+      }
+  
+      hf-col[span~="md-11"] {
+          max-width: 91.66666667%;
+      }
+  
+      hf-col[span~="md-12"] {
+          max-width: 100%;
+      }
+  }
+  
+  /* Must come after medium because cascading is used here */
+  @media only screen and (max-width: 576px) {
+      hf-col[span~="sm-1"] {
+          max-width: 8.33333333%;
+      }
+  
+      hf-col[span~="sm-2"] {
+          max-width: 16.66666667%;
+      }
+  
+      hf-col[span~="sm-3"] {
+          max-width: 25%;
+      }
+  
+      hf-col[span~="sm-4"] {
+          max-width: 33.33333333%;
+      }
+  
+      hf-col[span~="sm-5"] {
+          max-width: 41.66666667%;
+      }
+  
+      hf-col[span~="sm-6"] {
+          max-width: 50%;
+      }
+  
+      hf-col[span~="sm-7"] {
+          max-width: 58.33333333%;
+      }
+  
+      hf-col[span~="sm-8"] {
+          max-width: 66.66666667%;
+      }
+  
+      hf-col[span~="sm-9"] {
+          max-width: 75%;
+      }
+  
+      hf-col[span~="sm-10"] {
+          max-width: 83.33333333%;
+      }
+  
+      hf-col[span~="sm-11"] {
+          max-width: 91.66666667%;
+      }
+  
+      hf-col[span~="sm-12"] {
+          max-width: 100%;
+      }
+  }
+  
+
+
+  
+  hf-link {
+    /* Base link styles */
+    a, *[role=link] {
+      text-decoration: none;
+      color: var(--hf-color-primary);
+      cursor: pointer;
+  
+      /*:is(a, span[role=link]):visited { color: var(--hf-color-primary-action) }*/
+      &:hover,
+      &:focus-visible {
+        text-decoration: underline;
+        outline: 0;
+      }
+  
+      /* Disabled state */
+      &[disabled] {
+        color: var(--hf-color-disabled-fg);
+        pointer-events: none;
+      }
+    }
+  }
+  
+
+
+  
+  hf-theme-switch {
+    input[type="checkbox"] {
+      opacity: 0;
+      position: absolute;
+    }
+  
+    label[for=theme-toggle-checkbox] {
+      position: relative;
+      background-color: var(--hf-color-primary);
+      color: var(--hf-color-primary-text);
+      width: 52px;
+      height: 28px;
+      border-radius: 50px;
+      padding: 2px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--hf-color-primary-text);
+    }
+  
+    label .ball {
+      background-color: var(--hf-color-primary-text);
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      border-radius: 50%;
+      transition: transform 0.2s linear;
+    }
+  
+    input#theme-toggle-checkbox:checked + label .ball {
+      transform: translateX(24px);
+    }
+  }
+  
+
+
+  
+  hf-h-rule { 
+    display: block; 
+  
+    hr {
+      background-color: var(--hf-color-gray-3);
+      border: none;
+      margin: 0;
+      height: 1px;
+    }
+  
+  }
+  
+
+
+  component-list-sidebar {
+    display:block;
+
+    hf-link a {
+      color: var(--hf-color-primary-text, currentColor);
+    }
+    hf-list li:not(:has(a)) {
+      text-decoration: underline;
+      color: var(--hf-color-primary-text, currentColor);
+    }
+  }
+
+
+  
+  hf-list {
+    /* Ordered and unordered base styles */
+    ul, ol, dl { margin: 0 }
+    ul, ol { padding-left: var(--hf-space-md) }
+  
+    /* None type (no bullets) */
+    &[type=none] ul{
+      list-style: none;
+      padding-left: 0;
+    }
+  
+    /* Definition list base styles */
+    dd { margin-inline-start: 0 }
+    dl {
+      & > dt {
+        margin-top: var(--hf-space-sm);
+        text-transform: uppercase;
+        font-size: var(--hf-font-size-min);
+        font-weight: bold;
+  
+        &:first-of-type { margin-top: 0 }
+      }
+    }
+  
+    /* Content list base styles */
+    &[type=content] :is(ul, ol){
+      list-style: none;
+      padding-left: 0;
+  
+      & > li:not(:last-of-type) {
+        border-bottom: 1px solid var(--hf-color-border)
+      }
+    }
+  }
+  
+
+
+  ui-repl {
+    display:block;
+
+    hf-input-group, hf-box {
+      height:50vh;
+    }
+
+    textarea {
+      height:50vh;
+    }
+    
+    iframe {
+      display: block; 
+      width: 100%; 
+      height: 100%; 
+      border: none;
+    }
+
+    hf-box {
+    }
+    .editor {
+      height: 50vh;
+      padding:0px;
+    }
+  }
+
+  ui-repl > hf-row {
+    flex-direction:column;
+  }
+
+  ui-repl > hf-row > hf-col[span] {
+    max-width:100%;
+  }
+  @media only screen and (min-width:1096px) {
+    ui-repl > hf-row {
+      flex-direction:row;
+    }
+    ui-repl > hf-row > hf-col[span] {
+      max-width:50%;
+    }
+  }
+  
+
+
+  
+  hf-box {
+      display: block;
+      border-radius: var(--hf-border-radius-md);
+      padding: var(--hf-space-md);
+      background-color: var(--hf-color-elevated-surface);
+      color: var(--hf-color-surface-text);
+      border: 1px solid var(--hf-color-border);
+  
+      /*
+      The ord attr is short for "ordinal" as in "ordinal number word".
+      Ordinal number words are the 10+ words used for describing the
+      precedence or importance of an item in an ordered list.
+      */
+  
+      &[ord="secondary"] {
+          border: none;
+          background-color: var(--hf-color-well-surface);
+          box-shadow: 0px 1px 2px var(--hf-color-gray-3) inset;
+          color: var(--hf-color-surface-text);
+      }
+  
+      & > header {
+          border-top-left-radius: var(--hf-border-radius-md);
+          border-top-right-radius: var(--hf-border-radius-md);
+      }
+  
+      & + & {
+          margin-top: var(--hf-space-md);
+      }
+  }
+  
+  @media only screen and (max-width: 600px) {
+      hf-box {
+          padding: var(--hf-space-sm);
+      }
+  }
+  
+</style></head>
+<body>
+    <hf-responsive-sidebar enhanced="✨">
+
+
+
+<header>
+  <hf-row enhanced="✨">
+
+
+    <hf-col span="2" enhanced="✨">
+
+
+      <a href="/">
+        <svg slot="logo" xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="white" viewBox="0 0 256 256"><path d="M216,120V88a8,8,0,0,0-2.34-5.66l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40v80a8,8,0,0,0,16,0V40h88V88a8,8,0,0,0,8,8h48v24a8,8,0,0,0,16,0ZM160,51.31,188.69,80H160ZM68,160v48a8,8,0,0,1-16,0V192H32v16a8,8,0,0,1-16,0V160a8,8,0,0,1,16,0v16H52V160a8,8,0,0,1,16,0Zm56,0a8,8,0,0,1-8,8h-8v40a8,8,0,0,1-16,0V168H84a8,8,0,0,1,0-16h32A8,8,0,0,1,124,160Zm72,0v48a8,8,0,0,1-16,0V184l-9.6,12.8a8,8,0,0,1-12.8,0L148,184v24a8,8,0,0,1-16,0V160a8,8,0,0,1,14.4-4.8L164,178.67l17.6-23.47A8,8,0,0,1,196,160Zm56,48a8,8,0,0,1-8,8H216a8,8,0,0,1-8-8V160a8,8,0,0,1,16,0v40h20A8,8,0,0,1,252,208Z"></path></svg>
+        <span slot="domain">HTML-First UI</span>
+      </a>
+      <nav class="mobile-opener">
+        <input type="checkbox">
+        <label for="nav-toggle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>
+        </label>
+      </nav>
+    
+
+</hf-col>
+    <hf-col span="10" enhanced="✨">
+
+
+        <nav class="nav-menu">
+          <div slot="nav-items">
+        <hf-link enhanced="✨">
+
+<a aria-current="page" href="/components/">Components</a>
+
+</hf-link>
+          <hf-link enhanced="✨">
+
+<a href="/examples/">Examples</a>
+
+</hf-link>
+        <hf-theme-switch enhanced="✨">
+
+
+
+<input type="checkbox" id="theme-toggle-checkbox" name="theme-toggle">
+  <label for="theme-toggle-checkbox">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path></svg>
+    <span class="ball"></span>
+  </label>
+
+
+
+</hf-theme-switch>
+      </div>
+        </nav>
+    
+
+</hf-col>
+  
+
+</hf-row>
+</header>
+<hf-h-rule enhanced="✨">
+
+
+<hr>
+
+
+</hf-h-rule>
+<hf-row enhanced="✨">
+
+
+  <hf-col span="2" class="sidebar" enhanced="✨">
+
+
+    <component-list-sidebar current="box" class="p0" slot="sidebar" enhanced="✨">
+
+<hf-list type="none" enhanced="✨">
+
+
+  <ul>
+    <li><hf-link enhanced="✨">
+
+<a href="/components/accordion">Accordion</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/alert">Alert</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/autocomplete">Autocomplete</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/avatar">Avatar</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/badge">Badge</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/blockquote">Blockquote</a>
+
+</hf-link></li>
+<li>Box</li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/breadcrumb">Breadcrumb</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/button">Button</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/card">Card</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/checkbox">Checkbox</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/code-block">Code Block</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/code">Code</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/container">Container</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/details">Details</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/dialog">Dialog</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/dot">Dot</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/form">Form</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/grid">Grid</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/headings">Headings</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/h-rule">Horizontal Rule</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/input">Input</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/keyboard">Keyboard</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/link">Link</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/lists">Lists</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/loader">Loader</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/menu">Menu</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/radio">Radio</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/range">Range</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/responsive-header">Responsive Header</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/responsive-sidebar">Responsive Sidebar</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/select">Select</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/switch">Switch</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/table">Table</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/tabs">Tabs</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/tag">Tag</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/text">Text</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/textarea">Textarea</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/theme-menu">Theme Menu</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/theme-switch">Theme Switch</a>
+
+</hf-link></li>
+<li><hf-link enhanced="✨">
+
+<a href="/components/v-rule">Vertical Rule</a>
+
+</hf-link></li>
+  </ul>
+
+
+</hf-list>
+ </component-list-sidebar>
+  
+
+</hf-col>
+  <hf-col enhanced="✨">
+
+
+    <div slot="main">
+  <h1>Box</h1>
+  <h3>A container component for content organization</h3>
+  <ui-repl enhanced="✨">
+
+
+<hf-row enhanced="✨">
+
+
+  <hf-col span="6" enhanced="✨">
+
+
+    <hf-box class="editor" enhanced="✨">
+
+
+          <textarea readonly="" slot="markup" placeholder="Enter HTML ...">&lt;hf-box&gt;Primary content&lt;/hf-box&gt;
+&lt;hf-box ord="secondary"&gt;Secondary content&lt;/hf-box&gt;
+&lt;p&gt;Content outside a Box is considered neutral&lt;/p&gt; </textarea>
+          <div hidden="" class="editor"></div>
+    
+
+</hf-box>
+  
+
+</hf-col>
+  <hf-col span="6" enhanced="✨">
+
+
+    <hf-box class="preview" enhanced="✨">
+
+
+      <div slot="preview"><hf-box enhanced="✨">
+
+Primary content
+
+</hf-box>
+<hf-box ord="secondary" enhanced="✨">
+
+Secondary content
+
+</hf-box>
+<p>Content outside a Box is considered neutral</p> </div>
+    
+
+</hf-box>
+  
+
+</hf-col>
+
+
+</hf-row>
+
+
+
+</ui-repl>
+  <h2 id="notes">Notes</h2>
+<p>The box component provides a visual container for content with different ordinal variations.</p>
+
+<ul>
+  <li>Use without <code class="language-plaintext highlighter-rouge">ord</code> for primary content</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">ord="secondary"</code> for less prominent content</li>
+  <li>Content outside a Box is considered neutral</li>
+</ul>
+
+</div>
+  
+
+</hf-col>
+
+
+</hf-row>
+
+</hf-responsive-sidebar>
+
+
+
+    
+    
+    
+  
+
+
+<script type="module">
+  class HfResponsiveSidebar extends HTMLElement {
+    constructor() {
+      super();
+    }
+  }
+  if (!customElements.get('hf-responsive-sidebar')) { customElements.define('hf-responsive-sidebar', HfResponsiveSidebar) }
+  </script><script type="module">
+class HfRow extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-row')) {
+    customElements.define('hf-row', HfRow)
+}
+</script><script type="module">
+class HfCol extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-col')) {
+    customElements.define('hf-col', HfCol)
+}
+</script><script type="module">
+class HfLink extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-link')) {
+    customElements.define('hf-link', HfLink)
+}
+</script><script type="module">
+  
+  class ThemeSwitch extends HTMLElement {
+    constructor() {
+      super();
+      const darkLightTheme = window.localStorage.getItem('dark-light-theme');
+      if (darkLightTheme === 'dark') { 
+        document.documentElement.classList.add('dark-mode'); 
+        document.documentElement.classList.remove('light-mode')
+      } 
+      if (darkLightTheme === 'light') { 
+        document.documentElement.classList.add('light-mode')
+        document.documentElement.classList.remove('dark-mode'); 
+      } 
+    }
+    connectedCallback() {
+        const isEnhanced = this.getAttribute('enhanced') === '✨'
+        // client-side rendering
+        if (!isEnhanced) {
+          this.innerHTML = `
+  <input type="checkbox" id="theme-toggle-checkbox" name="theme-toggle" >
+    <label for="theme-toggle-checkbox">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path></svg>
+      <span class="ball"></span>
+    </label>
+  `
+          this.setAttribute('enhanced', 'client')
+        }
+      this.themeSelector = this.querySelector('input#theme-toggle-checkbox')
+      this.themeSelector?.addEventListener('change', (e) => {
+        const darkLightTheme = localStorage.getItem('dark-light-theme');
+        const docClasses = Array.from(document.documentElement.classList)
+        const isDarkClass = docClasses?.includes('dark-mode')
+        const isLightClass = docClasses?.includes('light-mode')
+        const isNoClass = !isDarkClass && !isLightClass
+        const targetTheme = e.target.checked ? 'dark' : 'light'
+        const targetDark = targetTheme === 'dark'
+        const targetLight = targetTheme === 'light'
+        const osAutoTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  
+        console.log({docClasses, isDarkClass,isLightClass,isNoClass, targetDark, targetLight,osAutoTheme})
+        if (targetDark && (isDarkClass || (isNoClass && osAutoTheme==='dark'))) {
+          this.setTheme('light')
+          e.target.checked = false
+        } else if (targetLight && (isLightClass || (isNoClass && osAutoTheme==='light'))) {
+          this.setTheme('dark')
+          e.target.checked = true
+        } else if (targetDark) {
+          this.setTheme('dark')
+        } else if (targetLight) {
+          this.setTheme('light')
+        } 
+      });
+    } 
+    setTheme(theme) {
+      if (theme === "light") {
+        localStorage.setItem('dark-light-theme', 'light');
+        document.documentElement.classList.add('light-mode')
+        document.documentElement.classList.remove('dark-mode')
+      } else if (theme === "dark") {
+        localStorage.setItem('dark-light-theme', 'dark');
+        document.documentElement.classList.add('dark-mode')
+        document.documentElement.classList.remove('light-mode')
+      } else {
+        localStorage.setItem('dark-light-theme', 'auto');
+        document.documentElement.classList.remove('light-mode')
+        document.documentElement.classList.remove('dark-mode')
+      }
+    }
+  }
+  if (!customElements.get('hf-theme-switch')) {customElements.define('hf-theme-switch', ThemeSwitch);}
+  
+</script><script type="module">
+class HfHRule extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.hasAttribute('enhanced')
+      // client-side rendering
+      if (!isEnhanced) {
+        this.innerHTML = '<hr/>'
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+}
+if (!customElements.get('hf-h-rule')) { customElements.define('hf-h-rule', HfHRule) }
+</script><script type="module">
+class HfList extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-list')) {
+    customElements.define('hf-list', HfList)
+}
+</script><script type="module">
+  import { EditorView, basicSetup, html, EditorState } from '/assets/editor.mjs'
+  class UiRepl extends HTMLElement{
+    constructor(){
+      super()
+    }
+    connectedCallback(){
+      this.codeInput = this.querySelector('textarea[slot=markup]')
+      this.editor = this.querySelector('.editor')
+      this.preview = this.querySelector('div[slot=preview]')
+      this.textarea = this.querySelector('textarea[slot=markup]')
+
+      this.codeInput.addEventListener('input', () => {
+          clearTimeout(this.timeoutId);
+          this.timeoutId = setTimeout(() => {
+            this.form.submit()
+          }, 500);
+      });
+
+      try {
+        let codeMirror= new EditorView({
+          state: EditorState.create({
+              doc: this.codeInput.value || '',
+              extensions: [basicSetup, html()]
+          }),
+          parent: this.editor
+        })
+      
+        const debounce = (func, wait) => {
+            let timeout;
+            return function(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        let editor = new EditorView({ });
+
+        const update = () => {
+            const newCode = codeMirror.state.doc.toString();
+            this.codeInput.value = newCode
+            this.preview.innerHTML = newCode
+        }
+
+        const debouncedUpdate = debounce(update, 500);
+
+        codeMirror.dispatch = ((originalDispatch) => {
+            return (transaction) => {
+                originalDispatch(transaction);
+                if (transaction.docChanged) {
+                    debouncedUpdate();
+                }
+            };
+        })(codeMirror.dispatch);
+
+      this.textarea.style.display = "none"
+      
+
+      } catch(error){
+        console.error("Editor failed to load")
+      }
+
+
+
+    }
+    disconnectedCallback(){
+      this.codeInput.removeEventListener('input')
+    }
+  }
+  if (!customElements.get('ui-repl')) { customElements.define('ui-repl', UiRepl ) }
+</script><script type="module">
+class HfBox extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-box')) {
+    customElements.define('hf-box', HfBox)
+}
+</script></body></html>

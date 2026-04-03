@@ -1,0 +1,1308 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/assets/hf-config.css">
+  <script type="module" src="/assets/initialize-dark-light.js"></script><link type="application/atom+xml" rel="alternate" href="/feed.xml" title="HF-UI HTML First SSR/CSR Components"><style>
+  
+    hf-responsive-header {
+      display: block;
+      --default-sidebar-transition: translate 0.25s cubic-bezier(.86,0,.07,1);
+      --default-header-height: 3em;
+      --default-header-background-color: var(--hf-color-primary);
+      --default-header-color: var(--hf-color-primary-text);
+      font-size: var(--hf-header-font-size, var(--hf-font-size-md));
+    }
+  
+    hf-responsive-header {
+      [slot=logo] {
+        width:1.5rem;
+        height:1.5rem;
+        margin-inline-end:1rem;
+      }
+  
+      header > hf-row {
+        background-color: var(--hf-header-bg-color, var(--default-header-background-color));
+        color: var(--hf-header-color, var(--default-header-color));
+        padding-inline: 1rem;
+        justify-items:center;
+      }
+  
+      .mobile-opener {
+        margin-inline-end:1rem;
+        display:flex;
+        position:relative;
+        width:1.5em;
+        height:1.5em;
+        justify-content:flex-end;
+        align-items:center;
+      }
+  
+    .mobile-opener input[type=checkbox] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+      }
+  
+      .mobile-opener label {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+      }
+  
+      header:has(.mobile-opener input[type='checkbox']:checked)  .nav-menu {
+        translate: 0 0;
+      }
+  
+      .nav-menu  {
+        position: fixed;
+        top: var(--hf-header-height, var(--default-header-height));
+        right: 0; /* 50vw for half screen */
+        bottom: 0;
+        left: 0;
+        translate: -100% 0;
+        transition: var(--layout-sidebar-transition, var(--default-sidebar-transition));
+        background-color: var(--hf-header-bg-color, var(--default-header-background-color));
+        z-index: 1000;
+        /* border-right: 1px solid var(--hf-color-gray-3); */
+      }
+  
+      .nav-menu > * {
+        display:flex;
+        justify-content:flex-start;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+  
+      .nav-menu > * > * {
+        padding-inline: 1rem;
+        padding-block: 1rem;
+      }
+  
+      .nav-menu [slot=nav-items] > hf-link > a { 
+        color: var(--hf-header-color, var(--default-header-color));
+      }
+    }
+  
+    @media only screen and (min-width: 48rem) {
+  
+      hf-responsive-header {
+        .nav-menu > * > * {
+          padding-inline: 1rem;
+          padding-block: 0;
+        }
+        .mobile-opener {
+          display:none;
+        }
+  
+        .nav-menu  {
+          translate: initial;
+          transition: initial;
+          position:static;
+          display:flex;
+          border-right: 0px ;
+        }
+  
+        .nav-menu > * {
+          display:flex;
+          justify-content:flex-end;
+          align-items:center;
+          flex-direction:row;
+        }
+      }
+    }
+  
+    hf-responsive-header {
+    [aria-current] {
+      border-bottom: 2px solid currentColor;
+    }
+  
+    hf-col {
+      display:flex;
+      align-items:center;
+    }
+    hf-col + hf-col {
+      justify-content:flex-end;
+    }
+  
+    hf-col:has(nav.nav-menu > [slot=nav-items]:empty) > nav.mobile-opener {
+      display:none;
+    }
+  
+    [slot=domain] {
+      white-space: nowrap;
+      display: block;
+      /*margin-block-start: 1em;
+      margin-block-end: 1em;*/
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      min-height:1em;
+      margin-block: calc((var(--hf-header-height, var(--default-header-height)) - 1em)/2);
+    }
+      a:has([slot=logo]) {
+        display:flex; 
+        align-items:center; 
+        text-decoration:unset; 
+        color:currentColor;
+      }
+    }
+  
+
+
+  
+  /* Inspired by Flexbox Grid https://github.com/kristoferjoseph/flexboxgrid */
+  hf-row {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: var(--hf-space-md);
+  
+      & + & {
+          margin-top: var(--hf-space-md);
+      }
+  
+      /* Centers columns inside the row */
+      &[center] {
+          justify-content: center;
+  
+          & hf-col:not([span]) {
+              flex-grow: inherit;
+              flex-basis: inherit;
+          }
+      }
+  }
+  
+
+
+  
+  hf-col,
+  hf-col[indent] {
+      box-sizing: border-box;
+      flex: 0 0 auto;
+  }
+  
+  hf-col {
+      flex-grow: 1;
+      flex-basis: 0;
+      max-width: 100%;
+  
+      /* span sets the width of the column */
+      &[span~="1"] {
+          max-width: 8.33333333%;
+      }
+  
+      &[span~="2"] {
+          max-width: 16.66666667%;
+      }
+  
+      &[span~="3"] {
+          max-width: 25%;
+      }
+  
+      &[span~="4"] {
+          max-width: 33.33333333%;
+      }
+  
+      &[span~="5"] {
+          max-width: 41.66666667%;
+      }
+  
+      &[span~="6"] {
+          max-width: 50%;
+      }
+  
+      &[span~="7"] {
+          max-width: 58.33333333%;
+      }
+  
+      &[span~="8"] {
+          max-width: 66.66666667%;
+      }
+  
+      &[span~="9"] {
+          max-width: 75%;
+      }
+  
+      &[span~="10"] {
+          max-width: 83.33333333%;
+      }
+  
+      &[span~="11"] {
+          max-width: 91.66666667%;
+      }
+  
+      &[span~="12"] {
+          max-width: 100%;
+      }
+  
+      /* indent is used to push columns inward */
+      &[indent="1"] {
+          margin-left: 8.33333333%;
+      }
+  
+      &[indent="2"] {
+          margin-left: 16.66666667%;
+      }
+  
+      &[indent="3"] {
+          margin-left: 25%;
+      }
+  
+      &[indent="4"] {
+          margin-left: 33.33333333%;
+      }
+  
+      &[indent="5"] {
+          margin-left: 41.66666667%;
+      }
+  
+      &[indent="6"] {
+          margin-left: 50%;
+      }
+  
+      &[indent="7"] {
+          margin-left: 58.33333333%;
+      }
+  
+      &[indent="8"] {
+          margin-left: 66.66666667%;
+      }
+  
+      &[indent="9"] {
+          margin-left: 75%;
+      }
+  
+      &[indent="10"] {
+          margin-left: 83.33333333%;
+      }
+  
+      &[indent="11"] {
+          margin-left: 91.66666667%;
+      }
+  
+      &[indent="12"] {
+          margin-left: 100%;
+      }
+  }
+  
+  /* Order is used to reorder columns at specific breakpoints */
+  @media only screen and (max-width: 768px) {
+      hf-col[span~="md-1"] {
+          max-width: 8.33333333%;
+      }
+  
+      hf-col[span~="md-2"] {
+          max-width: 16.66666667%;
+      }
+  
+      hf-col[span~="md-3"] {
+          max-width: 25%;
+      }
+  
+      hf-col[span~="md-4"] {
+          max-width: 33.33333333%;
+      }
+  
+      hf-col[span~="md-5"] {
+          max-width: 41.66666667%;
+      }
+  
+      hf-col[span~="md-6"] {
+          max-width: 50%;
+      }
+  
+      hf-col[span~="md-7"] {
+          max-width: 58.33333333%;
+      }
+  
+      hf-col[span~="md-8"] {
+          max-width: 66.66666667%;
+      }
+  
+      hf-col[span~="md-9"] {
+          max-width: 75%;
+      }
+  
+      hf-col[span~="md-10"] {
+          max-width: 83.33333333%;
+      }
+  
+      hf-col[span~="md-11"] {
+          max-width: 91.66666667%;
+      }
+  
+      hf-col[span~="md-12"] {
+          max-width: 100%;
+      }
+  }
+  
+  /* Must come after medium because cascading is used here */
+  @media only screen and (max-width: 576px) {
+      hf-col[span~="sm-1"] {
+          max-width: 8.33333333%;
+      }
+  
+      hf-col[span~="sm-2"] {
+          max-width: 16.66666667%;
+      }
+  
+      hf-col[span~="sm-3"] {
+          max-width: 25%;
+      }
+  
+      hf-col[span~="sm-4"] {
+          max-width: 33.33333333%;
+      }
+  
+      hf-col[span~="sm-5"] {
+          max-width: 41.66666667%;
+      }
+  
+      hf-col[span~="sm-6"] {
+          max-width: 50%;
+      }
+  
+      hf-col[span~="sm-7"] {
+          max-width: 58.33333333%;
+      }
+  
+      hf-col[span~="sm-8"] {
+          max-width: 66.66666667%;
+      }
+  
+      hf-col[span~="sm-9"] {
+          max-width: 75%;
+      }
+  
+      hf-col[span~="sm-10"] {
+          max-width: 83.33333333%;
+      }
+  
+      hf-col[span~="sm-11"] {
+          max-width: 91.66666667%;
+      }
+  
+      hf-col[span~="sm-12"] {
+          max-width: 100%;
+      }
+  }
+  
+
+
+  
+  hf-link {
+    /* Base link styles */
+    a, *[role=link] {
+      text-decoration: none;
+      color: var(--hf-color-primary);
+      cursor: pointer;
+  
+      /*:is(a, span[role=link]):visited { color: var(--hf-color-primary-action) }*/
+      &:hover,
+      &:focus-visible {
+        text-decoration: underline;
+        outline: 0;
+      }
+  
+      /* Disabled state */
+      &[disabled] {
+        color: var(--hf-color-disabled-fg);
+        pointer-events: none;
+      }
+    }
+  }
+  
+
+
+  
+  hf-theme-switch {
+    input[type="checkbox"] {
+      opacity: 0;
+      position: absolute;
+    }
+  
+    label[for=theme-toggle-checkbox] {
+      position: relative;
+      background-color: var(--hf-color-primary);
+      color: var(--hf-color-primary-text);
+      width: 52px;
+      height: 28px;
+      border-radius: 50px;
+      padding: 2px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--hf-color-primary-text);
+    }
+  
+    label .ball {
+      background-color: var(--hf-color-primary-text);
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      border-radius: 50%;
+      transition: transform 0.2s linear;
+    }
+  
+    input#theme-toggle-checkbox:checked + label .ball {
+      transform: translateX(24px);
+    }
+  }
+  
+
+
+  
+  hf-h-rule { 
+    display: block; 
+  
+    hr {
+      background-color: var(--hf-color-gray-3);
+      border: none;
+      margin: 0;
+      height: 1px;
+    }
+  
+  }
+  
+
+
+  
+  /* Base container styles */
+  hf-container {
+      display: block;
+      max-width: var(--hf-max-content-width);
+      margin: auto;
+      padding: var(--hf-space-md) var(--hf-space-lg);
+  
+      /* Sizes */
+      &[maxwidth="md"] {
+          max-width: calc(38.5 * var(--hf-space-lg));
+      } /* Plus its margin = 960 which is a very comfortable and common size */
+      &[maxwidth="sm"] {
+          max-width: calc(16 * var(--hf-space-lg));
+      }
+      &[maxwidth="none"] {
+          max-width: none;
+      }
+  }
+  
+  @media only screen and (max-width: 600px) {
+      hf-container {
+          padding: var(--hf-space-sm);
+      }
+  }
+  
+
+
+  
+  hf-list {
+    /* Ordered and unordered base styles */
+    ul, ol, dl { margin: 0 }
+    ul, ol { padding-left: var(--hf-space-md) }
+  
+    /* None type (no bullets) */
+    &[type=none] ul{
+      list-style: none;
+      padding-left: 0;
+    }
+  
+    /* Definition list base styles */
+    dd { margin-inline-start: 0 }
+    dl {
+      & > dt {
+        margin-top: var(--hf-space-sm);
+        text-transform: uppercase;
+        font-size: var(--hf-font-size-min);
+        font-weight: bold;
+  
+        &:first-of-type { margin-top: 0 }
+      }
+    }
+  
+    /* Content list base styles */
+    &[type=content] :is(ul, ol){
+      list-style: none;
+      padding-left: 0;
+  
+      & > li:not(:last-of-type) {
+        border-bottom: 1px solid var(--hf-color-border)
+      }
+    }
+  }
+  
+
+
+  
+   hf-code {
+     code {
+       border-radius: var(--hf-border-radius-md);
+       background-color: var(--hf-color-surface-well);
+       color: var(--hf-color-code-text);
+       padding: 1px 3px;
+     }
+  
+   }
+  
+</style></head>
+<body>
+    <hf-responsive-header enhanced="✨">
+
+
+<header>
+  <hf-row enhanced="✨">
+
+
+    <hf-col span="2" enhanced="✨">
+
+
+    <a href="/">
+      <svg slot="logo" xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="white" viewBox="0 0 256 256"><path d="M216,120V88a8,8,0,0,0-2.34-5.66l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40v80a8,8,0,0,0,16,0V40h88V88a8,8,0,0,0,8,8h48v24a8,8,0,0,0,16,0ZM160,51.31,188.69,80H160ZM68,160v48a8,8,0,0,1-16,0V192H32v16a8,8,0,0,1-16,0V160a8,8,0,0,1,16,0v16H52V160a8,8,0,0,1,16,0Zm56,0a8,8,0,0,1-8,8h-8v40a8,8,0,0,1-16,0V168H84a8,8,0,0,1,0-16h32A8,8,0,0,1,124,160Zm72,0v48a8,8,0,0,1-16,0V184l-9.6,12.8a8,8,0,0,1-12.8,0L148,184v24a8,8,0,0,1-16,0V160a8,8,0,0,1,14.4-4.8L164,178.67l17.6-23.47A8,8,0,0,1,196,160Zm56,48a8,8,0,0,1-8,8H216a8,8,0,0,1-8-8V160a8,8,0,0,1,16,0v40h20A8,8,0,0,1,252,208Z"></path></svg>
+      <span slot="domain">HTML-First UI</span>
+      </a>
+    
+
+</hf-col>
+    <hf-col span="10" enhanced="✨">
+
+
+        <nav class="mobile-opener">
+          <input type="checkbox">
+          <label for="nav-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"></path></svg>
+          </label>
+        </nav>
+        <nav class="nav-menu">
+          <div slot="nav-items">
+        <hf-link enhanced="✨">
+
+<a href="/components/">Components</a>
+
+</hf-link>
+          <hf-link enhanced="✨">
+
+<a href="/examples/">Examples</a>
+
+</hf-link>
+        <hf-theme-switch enhanced="✨">
+
+
+
+<input type="checkbox" id="theme-toggle-checkbox" name="theme-toggle">
+  <label for="theme-toggle-checkbox">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path></svg>
+    <span class="ball"></span>
+  </label>
+
+
+
+</hf-theme-switch>
+      </div>
+        </nav>
+    
+
+</hf-col>
+  
+
+</hf-row>
+</header>
+<hf-h-rule enhanced="✨">
+
+
+<hr>
+
+
+</hf-h-rule>
+
+</hf-responsive-header>
+
+    <hf-container maxwidth="md" enhanced="✨">
+
+
+        <h1>
+<hf-link enhanced="✨">
+
+<a href="#html-first-ui-components-hf-ui" aria-hidden="true" class="anchor" id="html-first-ui-components-hf-ui"></a>
+
+</hf-link>HTML First UI Components (HF-UI)</h1>
+<p>A set of HTML First web components for use in any Framework or Language.</p>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#%EF%B8%8F-work-in-progress-%EF%B8%8F" aria-hidden="true" class="anchor" id="️-work-in-progress-️"></a>
+
+</hf-link>⚠️ Work in Progress ⚠️</h2>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#goals" aria-hidden="true" class="anchor" id="goals"></a>
+
+</hf-link>Goals</h2>
+<hf-list enhanced="✨">
+
+<ul>
+<li>
+<strong>Universal</strong> for use with any framework friendly to HTML and any language that supports WASM</li>
+<li>
+<strong>Dependency free</strong> copy and paste anywhere</li>
+<li>
+<strong>Server-side Rendered</strong> by default</li>
+<li>
+<strong>Client-side Rendered</strong> for when you need it</li>
+<li>
+<strong>Progressive Enhanced</strong> fully functional without JavaScript and even better with it</li>
+<li>
+<strong>Light DOM Web Components</strong> so forms and everything else works as you expect it to</li>
+</ul>
+
+</hf-list>
+<p>HF-UI components work especially well with <hf-link enhanced="✨">
+
+<a href="enhance.dev">Enhance</a>
+
+</hf-link>. The initial work was inspired by <hf-link enhanced="✨">
+
+<a href="https://m-docs.org">MDash</a>
+
+</hf-link>. Icons used are from <hf-link enhanced="✨">
+
+<a href="https://phosphoricons.com/">Phosphor</a>
+
+</hf-link>. See <hf-link enhanced="✨">
+
+<a href="#acknowledgements">Acknowledgements</a>
+
+</hf-link> for other related projects and resources.</p>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#getting-started" aria-hidden="true" class="anchor" id="getting-started"></a>
+
+</hf-link>Getting Started</h2>
+<p>For an Enhance project the quickest way to try out the components in your project is:</p>
+<ol>
+<li>Install the components</li>
+</ol>
+<hf-list enhanced="✨">
+
+<ul>
+<li><hf-code enhanced="✨">
+
+
+<code>npm i @htmlfirst/ui</code>
+
+
+</hf-code></li>
+</ul>
+
+</hf-list>
+<ol start="2">
+<li>Copy the base css file to your public folder</li>
+</ol>
+<hf-list enhanced="✨">
+
+<ul>
+<li><hf-code enhanced="✨">
+
+
+<code>cp node_modules/@htmlfirst/ui/assets/hf-config.css public/</code>
+
+
+</hf-code></li>
+</ul>
+
+</hf-list>
+<ol start="3">
+<li>Add the css reference to your <hf-code enhanced="✨">
+
+
+<code>head.mjs</code>
+
+
+</hf-code>
+</li>
+<li>Add a component or all the components to your app elements folder (<hf-link enhanced="✨">
+
+<a href="#usage">usage</a>
+
+</hf-link>)</li>
+</ol>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#usage" aria-hidden="true" class="anchor" id="usage"></a>
+
+</hf-link>Usage</h2>
+<h3>
+<hf-link enhanced="✨">
+
+<a href="#add-all-components-to-an-enhance-project" aria-hidden="true" class="anchor" id="add-all-components-to-an-enhance-project"></a>
+
+</hf-link>Add all components to an Enhance project</h3>
+<p>The ssr-elements can be added to an Enhance project with the <hf-code enhanced="✨">
+
+
+<code>element.mjs</code>
+
+
+</hf-code> file.
+Add the following <hf-code enhanced="✨">
+
+
+<code>/app/element.mjs</code>
+
+
+</hf-code> file to your app directory:</p>
+<pre lang="javascript" style="background-color:#2b303b;"><code><span style="color:#65737e;">// /app/elements.mjs
+</span><span style="color:#b48ead;">import </span><span style="color:#c0c5ce;">{ </span><span style="color:#bf616a;">elements </span><span style="color:#c0c5ce;">} </span><span style="color:#b48ead;">from </span><span style="color:#c0c5ce;">'</span><span style="color:#a3be8c;">@html/ui</span><span style="color:#c0c5ce;">' 
+</span><span style="color:#b48ead;">export default </span><span style="color:#bf616a;">elements
+</span></code></pre>
+<h3>
+<hf-link enhanced="✨">
+
+<a href="#use-individual-components-in-enhance" aria-hidden="true" class="anchor" id="use-individual-components-in-enhance"></a>
+
+</hf-link>Use individual components in Enhance</h3>
+<p>Individual  can be used as follows:</p>
+<pre lang="javascript" style="background-color:#2b303b;"><code><span style="color:#65737e;">// /app/elements/hf-button.mjs
+</span><span style="color:#b48ead;">import </span><span style="color:#c0c5ce;">{ </span><span style="color:#bf616a;">hfButton </span><span style="color:#c0c5ce;">} </span><span style="color:#b48ead;">from </span><span style="color:#c0c5ce;">'</span><span style="color:#a3be8c;">@htmlfirst/ui/dist/elements</span><span style="color:#c0c5ce;">' 
+</span><span style="color:#b48ead;">export default </span><span style="color:#bf616a;">hfButton
+</span></code></pre>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#server-side-and-client-side-rendering" aria-hidden="true" class="anchor" id="server-side-and-client-side-rendering"></a>
+
+</hf-link>Server-side and Client-side Rendering</h2>
+<p>HF-UI components can be rendered on the server or on the client. If a component is server side rendered in a page it inserts the needed styles and behavior(JavaScript). If that same component is later client-side rendered. If the component has not been server-side rendered first the component definition needs to be sent with the page as a script. That script will make sure the styles are inserted on the client.</p>
+<p>There are three formats for each component in the <hf-code enhanced="✨">
+
+
+<code>/dist</code>
+
+
+</hf-code> folder.</p>
+<hf-list enhanced="✨">
+
+<ul>
+<li>
+<hf-code enhanced="✨">
+
+
+<code>element-html</code>
+
+
+</hf-code>: Wrapped in HTML tags for use in SSR and CSR. Useful with Enhance SSR WASM in languages other than NodeJS.</li>
+<li>
+<hf-code enhanced="✨">
+
+
+<code>element-mjs</code>
+
+
+</hf-code>: Component deinitions are wrapped as a javascript function that accepts state and returns HTML. These also handle SSR and CSR These are necessary for some components that use state (in the form of attributes) in the templating. They are especially useful in NodeJS projects so that the components can be <hf-code enhanced="✨">
+
+
+<code>import</code>
+
+
+</hf-code>ed as modules.</li>
+<li>
+<hf-code enhanced="✨">
+
+
+<code>components</code>
+
+
+</hf-code>: These are written as browser JavaScript and used for clientside rendering only.</li>
+</ul>
+
+</hf-list>
+<h3>
+<hf-link enhanced="✨">
+
+<a href="#client-side-self-rendering" aria-hidden="true" class="anchor" id="client-side-self-rendering"></a>
+
+</hf-link>Client side (self rendering)</h3>
+<p>When client side rendered the HF-UI components render themselves. When the components is first defined it will add its styles to the document head. This only happens once when the component is defined so that if the same component was already server side rendered the styles do not get added twice. Then when that component is added to the DOM at any point it will render its own contents inside the <hf-code enhanced="✨">
+
+
+<code>connectedCallback</code>
+
+
+</hf-code>.</p>
+<p>Since these components do not use the Shadow DOM the content does not use live slots. The content that is present when the component is connected to the DOM is expanded/rendered. In practice this is usually not a problem. The components are built to repond to attribute changes as needed. The only common edge case where this needs to be considered is when setting <hf-code enhanced="✨">
+
+
+<code>innerHTML</code>
+
+
+</hf-code> on an element. It is somewhat common to <hf-code enhanced="✨">
+
+
+<code>const thing = document.createElement('my-thing')</code>
+
+
+</hf-code> and then set <hf-code enhanced="✨">
+
+
+<code>thing.innerHTML = "&lt;div&gt;Something&lt;/div&gt;</code>
+
+
+</hf-code>. Here <hf-code enhanced="✨">
+
+
+<code>thing</code>
+
+
+</hf-code> will render the contents before adding the content. There are many ways around this but one options is in the second step to set <hf-code enhanced="✨">
+
+
+<code>thing.outerHTML = &lt;my-thing&gt;&lt;div&gt;Something&lt;/div&gt;&lt;/my-thing&gt;</code>
+
+
+</hf-code>. This way the component will be added with the content already in place.</p>
+<p>To use a CSR component in the browser with an Enhance project it can be copied directly to the public folder. They are dependency free so no build step is required. Just import them from the page as <hf-code enhanced="✨">
+
+
+<code>&lt;script type=module src="/_public/hf-button.mjs"&gt;&lt;/script&gt;</code>
+
+
+</hf-code>.</p>
+<p>If you want to use multiple components and combine them into one script you can use the <hf-code enhanced="✨">
+
+
+<code>app/browser</code>
+
+
+</hf-code> folder to bundle them into the <hf-code enhanced="✨">
+
+
+<code>public/browser</code>
+
+
+</hf-code> folder as follows:</p>
+<pre lang="javascript" style="background-color:#2b303b;"><code><span style="color:#65737e;">// app/browser/my-page.mjs
+</span><span style="color:#b48ead;">import </span><span style="color:#c0c5ce;">{</span><span style="color:#bf616a;">hfButton</span><span style="color:#c0c5ce;">,</span><span style="color:#bf616a;">hfCard</span><span style="color:#c0c5ce;">} </span><span style="color:#b48ead;">from </span><span style="color:#c0c5ce;">'</span><span style="color:#a3be8c;">@htmlfirst/ui/components.js</span><span style="color:#c0c5ce;">'
+</span></code></pre>
+<pre lang="html" style="background-color:#2b303b;"><code><span style="color:#65737e;">&lt;!-- My Page --&gt;
+</span><span style="color:#c0c5ce;"> &lt;</span><span style="color:#bf616a;">body</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">   &lt;</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;stuff&lt;/</span><span style="color:#bf616a;">div</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">   &lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">module </span><span style="color:#d08770;">src</span><span style="color:#c0c5ce;">="</span><span style="color:#a3be8c;">/_public/browser/my-page.mjs</span><span style="color:#c0c5ce;">"&gt;&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">  &lt;/</span><span style="color:#bf616a;">body</span><span style="color:#c0c5ce;">&gt;
+</span></code></pre>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#customize-with-custom-properties" aria-hidden="true" class="anchor" id="customize-with-custom-properties"></a>
+
+</hf-link>Customize with Custom Properties</h2>
+<p>The components can be customized by setting values on a set of custom properties. This gives some flexibility without being too overwhelming. For an Enhance project copy the <hf-code enhanced="✨">
+
+
+<code>public/hf-custom-properties.css</code>
+
+
+</hf-code> file into your projects public folder. Or if using another framework put the file wherever static assets are served from. Most of the properties are colors with a few sizes for fonts and spacing.</p>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#use-with-other-style-libraries" aria-hidden="true" class="anchor" id="use-with-other-style-libraries"></a>
+
+</hf-link>Use with other style libraries</h2>
+<p>The HF-UI components can be used with other style systems. They work especially well alongside utility style systems like Paramour (formerly called Enhance styles). They can be used with Tailwind or plain old CSS.</p>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#use-with-other-frameworks-or-languages" aria-hidden="true" class="anchor" id="use-with-other-frameworks-or-languages"></a>
+
+</hf-link>Use with other frameworks or languages</h2>
+<p>These components can be used with almost any framework that is HTML friendly. Meaning if HTML tags are respected and passed around without being turned into some JavaScript representation you should be able to use it. Some examples are included in the accompanying Github repository and others are shown in the Github Enhance-Dev repositories.</p>
+<p>Some supported frameworks and languages</p>
+<hf-list enhanced="✨">
+
+<ul>
+<li>Enhance (the framework): Full SSR and CSR support</li>
+<li>Jekyll: The docs for HF-UI use Jekyll as a static site generator the components are rendered by Jekyll as HTML and then enhance-ssr is run to expand the results. This example uses Ruby for the Jekyll and Node for Enhance, but there is a Ruby WASM plugin for Enhance that could be used to avoid the need for NodeJS.</li>
+<li>Markdown: Markdown is HTML friendly so many things that support markdown can support these components.</li>
+<li>Wordpress: These and any enhance components can be SSRed in Wordpress using the enhance wordpress plugin.</li>
+<li>PHP: There is a native port of Enhance SSR in PHP.</li>
+<li>Eleventy:</li>
+<li>Go, Rust, C#, .... : Any language that supports WASM should work.</li>
+</ul>
+
+</hf-list>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#color-themes-light-and-dark-mode" aria-hidden="true" class="anchor" id="color-themes-light-and-dark-mode"></a>
+
+</hf-link>Color Themes (Light and Dark Mode)</h2>
+<p>The components are built with theming in mind. By choosing appropriate colors and adjusting custom properties a working light and dark can be applied. The following recommendations show options for choosing a theme based on OS default or user selection. This preference can be persisted through local storage.</p>
+<p>The primary way that components adapt to a light and dark them is by use of the scale of Gray (or other neutral) color.
+The user configuration requires custom property values for the neutral color from <hf-code enhanced="✨">
+
+
+<code>--hf-color-gray-0</code>
+
+
+</hf-code> to <hf-code enhanced="✨">
+
+
+<code>--hf-color-gray-10</code>
+
+
+</hf-code>.
+For light mode this range should be set with light on the low end and dark on the high end.
+For dark mode the range is reversed.
+Other changes to the primary color and other supporting colors may need to be made depending on the theme.</p>
+<pre lang="css" style="background-color:#2b303b;"><code><span style="color:#c0c5ce;">  </span><span style="color:#65737e;">/* Light Theme */
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-0</span><span style="color:#b48ead;">:  hsl(0, 0%, 95%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-1</span><span style="color:#b48ead;">:  hsl(0, 0%, 90%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-2</span><span style="color:#b48ead;">:  hsl(0, 0%, 80%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-3</span><span style="color:#b48ead;">:  hsl(0, 0%, 70%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-4</span><span style="color:#b48ead;">:  hsl(0, 0%, 60%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-5</span><span style="color:#b48ead;">: hsl(0, 0%, 50%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-6</span><span style="color:#b48ead;">: hsl(0, 0%, 40%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-7</span><span style="color:#b48ead;">: hsl(0, 0%, 30%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-8</span><span style="color:#b48ead;">: hsl(0, 0%, 20%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-9</span><span style="color:#b48ead;">: hsl(0, 0%, 10%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-10</span><span style="color:#b48ead;">: hsl(0, 0%, 7%</span><span style="color:#c0c5ce;">); 
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">  </span><span style="color:#65737e;">/* Dark Theme */
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-0</span><span style="color:#b48ead;">: hsl(0, 0%, 7%</span><span style="color:#c0c5ce;">); 
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-1</span><span style="color:#b48ead;">: hsl(0, 0%, 10%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-2</span><span style="color:#b48ead;">: hsl(0, 0%, 20%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-3</span><span style="color:#b48ead;">: hsl(0, 0%, 30%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-4</span><span style="color:#b48ead;">: hsl(0, 0%, 40%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-5</span><span style="color:#b48ead;">: hsl(0, 0%, 50%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-6</span><span style="color:#b48ead;">:  hsl(0, 0%, 60%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-7</span><span style="color:#b48ead;">:  hsl(0, 0%, 70%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-8</span><span style="color:#b48ead;">:  hsl(0, 0%, 80%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-9</span><span style="color:#b48ead;">:  hsl(0, 0%, 90%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-10</span><span style="color:#b48ead;">:  hsl(0, 0%, 95%</span><span style="color:#c0c5ce;">);
+</span></code></pre>
+<p>These custom properties can be applied at an application level in many possible ways.
+The following is a suggested approach that allows for operating system defaults to be used and overridden by if desired.</p>
+<p>To persist the users preference while avoiding a flash of the wrong color theme as the site is initially loaded requires some effort.
+This example persists the user preference in local storage.
+Because it uses JavaScript it is a progressive enhancement.
+If JavaScript fails to load the fallback default theme is still a working theme.</p>
+<p>To avoid the flash of the wrong theme the following script should be in the docuemnt head, or somewhere before any of the body begins to load.
+This checks local storage for a theme preference and applies a class to the document (<hf-code enhanced="✨">
+
+
+<code>&lt;html&gt;</code>
+
+
+</hf-code>) element.
+This local storage preference is set by the theme picker show further down.
+This script is intentionally minimal to make sure if a preference is stored it is used before any content is shown.</p>
+<pre lang="html" style="background-color:#2b303b;"><code><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">darkLightTheme </span><span style="color:#c0c5ce;">= window.localStorage.</span><span style="color:#8fa1b3;">getItem</span><span style="color:#c0c5ce;">('</span><span style="color:#a3be8c;">dark-light-theme</span><span style="color:#c0c5ce;">');
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">darkLightTheme </span><span style="color:#c0c5ce;">=== '</span><span style="color:#a3be8c;">dark</span><span style="color:#c0c5ce;">') { document.documentElement.classList.</span><span style="color:#96b5b4;">add</span><span style="color:#c0c5ce;">('</span><span style="color:#a3be8c;">dark-mode</span><span style="color:#c0c5ce;">'); } 
+</span><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;
+</span></code></pre>
+<pre lang="css" style="background-color:#2b303b;"><code><span style="color:#65737e;">/* If theme class is set for Dark it has high priority by the specificity */
+</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">root</span><span style="color:#8fa1b3;">.</span><span style="color:#d08770;">dark-mode</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">not(</span><span style="color:#8fa1b3;">#id-for-high-specificity</span><span style="color:#b48ead;">) </span><span style="color:#c0c5ce;">{
+</span><span style="color:#c0c5ce;">      </span><span style="color:#65737e;">/* Dark Theme */
+</span><span style="color:#c0c5ce;">      --hf-color-gray-0:  </span><span style="color:#96b5b4;">hsl</span><span style="color:#c0c5ce;">(</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">, </span><span style="color:#d08770;">0%</span><span style="color:#c0c5ce;">, </span><span style="color:#d08770;">7%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">}
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;">/* If no theme class is set on the document the theme toggle 
+</span><span style="color:#65737e;">   can be used to set theme or leave the theme as auto       */
+</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">root</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">has(</span><span style="color:#bf616a;">input</span><span style="color:#8fa1b3;">[</span><span style="color:#d08770;">name</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">color-scheme</span><span style="color:#8fa1b3;">][</span><span style="color:#d08770;">value</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">dark</span><span style="color:#8fa1b3;">]:</span><span style="color:#b48ead;">checked) </span><span style="color:#c0c5ce;">{
+</span><span style="color:#c0c5ce;">  #color-scheme::after{ 
+</span><span style="color:#c0c5ce;">    content:'</span><span style="color:#a3be8c;">Dark Mode</span><span style="color:#c0c5ce;">';
+</span><span style="color:#c0c5ce;">  }
+</span><span style="color:#c0c5ce;">      </span><span style="color:#65737e;">/* Dark Theme */
+</span><span style="color:#c0c5ce;">      --</span><span style="color:#bf616a;">hf-color-gray-0</span><span style="color:#b48ead;">: hsl(0, 0%, 7%</span><span style="color:#c0c5ce;">); 
+</span><span style="color:#c0c5ce;">}
+</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">root</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">has(</span><span style="color:#bf616a;">input</span><span style="color:#8fa1b3;">[</span><span style="color:#d08770;">name</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">color-scheme</span><span style="color:#8fa1b3;">][</span><span style="color:#d08770;">value</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">light</span><span style="color:#8fa1b3;">]:</span><span style="color:#b48ead;">checked) </span><span style="color:#c0c5ce;">{
+</span><span style="color:#c0c5ce;">  #color-scheme::after{ 
+</span><span style="color:#c0c5ce;">    content:'</span><span style="color:#a3be8c;">Light Mode</span><span style="color:#c0c5ce;">';
+</span><span style="color:#c0c5ce;">  }
+</span><span style="color:#c0c5ce;">  </span><span style="color:#65737e;">/* Light Theme */
+</span><span style="color:#c0c5ce;">  --</span><span style="color:#bf616a;">hf-color-gray-0</span><span style="color:#b48ead;">:  hsl(0, 0%, 95%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">}
+</span><span style="color:#65737e;">/* If the theme switcher auto is set it no specific theme 
+</span><span style="color:#65737e;">   values are set allowing the default values to take over */
+</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">root</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">has(</span><span style="color:#bf616a;">input</span><span style="color:#8fa1b3;">[</span><span style="color:#d08770;">name</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">color-scheme</span><span style="color:#8fa1b3;">][</span><span style="color:#d08770;">value</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">auto</span><span style="color:#8fa1b3;">]:</span><span style="color:#b48ead;">checked) </span><span style="color:#c0c5ce;">{
+</span><span style="color:#c0c5ce;">  #color-scheme::after{ 
+</span><span style="color:#c0c5ce;">    content:'</span><span style="color:#a3be8c;">Auto Mode</span><span style="color:#c0c5ce;">';
+</span><span style="color:#c0c5ce;">  }
+</span><span style="color:#c0c5ce;">}
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;">/* Default theme values are set for when nothing is chosen */
+</span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">root </span><span style="color:#c0c5ce;">{
+</span><span style="color:#c0c5ce;">  </span><span style="color:#65737e;">/* Colors */
+</span><span style="color:#c0c5ce;">  color-scheme: light dark;
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">  </span><span style="color:#65737e;">/* Default Light Theme */
+</span><span style="color:#c0c5ce;">  --hf-color-gray-0:  </span><span style="color:#96b5b4;">hsl</span><span style="color:#c0c5ce;">(</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">, </span><span style="color:#d08770;">0%</span><span style="color:#c0c5ce;">, </span><span style="color:#d08770;">95%</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">}
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#65737e;">/* A media query handles the OS default theme if set */
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">@media </span><span style="color:#c0c5ce;">( prefers-color-scheme: dark ) {
+</span><span style="color:#b48ead;">    </span><span style="color:#8fa1b3;">:</span><span style="color:#b48ead;">root </span><span style="color:#c0c5ce;">{
+</span><span style="color:#c0c5ce;">      </span><span style="color:#65737e;">/* Dark Theme */
+</span><span style="color:#c0c5ce;">      --hf-color-gray-0: </span><span style="color:#96b5b4;">hsl</span><span style="color:#c0c5ce;">(</span><span style="color:#d08770;">0</span><span style="color:#c0c5ce;">, </span><span style="color:#d08770;">0%</span><span style="color:#c0c5ce;">, </span><span style="color:#d08770;">7%</span><span style="color:#c0c5ce;">); 
+</span><span style="color:#c0c5ce;">    }
+</span><span style="color:#c0c5ce;">  }
+</span><span style="color:#c0c5ce;">
+</span></code></pre>
+<h2>
+<hf-link enhanced="✨">
+
+<a href="#how-it-works" aria-hidden="true" class="anchor" id="how-it-works"></a>
+
+</hf-link>How It Works</h2>
+<p>For SSR render HTML</p>
+<pre lang="html" style="background-color:#2b303b;"><code><span style="color:#65737e;">&lt;!-- hf-blockquote in HTML form --&gt;
+</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt; </span><span style="color:#bf616a;">hf-blockquote </span><span style="color:#c0c5ce;">{ color: blue; } &lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">blockquote</span><span style="color:#c0c5ce;">&gt;&lt;</span><span style="color:#bf616a;">slot</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">slot</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">blockquote</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">module</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">HfBlockquote </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">HTMLElement</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">constructor</span><span style="color:#eff1f5;">(){ </span><span style="color:#96b5b4;">super</span><span style="color:#eff1f5;">(); }
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">connectedCallback</span><span style="color:#eff1f5;">(){ }
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(!</span><span style="color:#bf616a;">customElements</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">get</span><span style="color:#c0c5ce;">("</span><span style="color:#a3be8c;">hf-blockquote</span><span style="color:#c0c5ce;">")){ </span><span style="color:#bf616a;">customElements</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">define</span><span style="color:#c0c5ce;">('</span><span style="color:#a3be8c;">hf-blockquote</span><span style="color:#c0c5ce;">',</span><span style="color:#bf616a;">HfBlockquote</span><span style="color:#c0c5ce;">) }
+</span><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">
+</span></code></pre>
+<p>For SSR followed by CSR</p>
+<pre lang="html" style="background-color:#2b303b;"><code><span style="color:#65737e;">&lt;!-- hf-blockquote in HTML form --&gt;
+</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt; </span><span style="color:#bf616a;">hf-blockquote </span><span style="color:#c0c5ce;">{ color: blue; } &lt;/</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">blockquote</span><span style="color:#c0c5ce;">&gt;&lt;</span><span style="color:#bf616a;">slot</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">slot</span><span style="color:#c0c5ce;">&gt;&lt;/</span><span style="color:#bf616a;">blockquote</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">module</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">HfBlockquote </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">HTMLElement</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">constructor</span><span style="color:#eff1f5;">(){ </span><span style="color:#96b5b4;">super</span><span style="color:#eff1f5;">(); }
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">connectedCallback</span><span style="color:#eff1f5;">(){ </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">clientRender</span><span style="color:#eff1f5;">(); }
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">clientRender</span><span style="color:#eff1f5;">() {
+</span><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">isEnhanced </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">hasAttribute</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">"</span><span style="color:#a3be8c;">enhanced</span><span style="color:#c0c5ce;">"</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">!</span><span style="color:#bf616a;">isEnhanced</span><span style="color:#eff1f5;">){
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Render on the client as needed
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#96b5b4;">setAttribute</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">"</span><span style="color:#a3be8c;">enhanced</span><span style="color:#c0c5ce;">"</span><span style="color:#eff1f5;">,</span><span style="color:#c0c5ce;">"</span><span style="color:#a3be8c;">client</span><span style="color:#c0c5ce;">"</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">      }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(!</span><span style="color:#bf616a;">customElements</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">get</span><span style="color:#c0c5ce;">("</span><span style="color:#a3be8c;">hf-blockquote</span><span style="color:#c0c5ce;">")){ </span><span style="color:#bf616a;">customElements</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">define</span><span style="color:#c0c5ce;">('</span><span style="color:#a3be8c;">hf-blockquote</span><span style="color:#c0c5ce;">',</span><span style="color:#bf616a;">HfBlockquote</span><span style="color:#c0c5ce;">) }
+</span><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">
+</span></code></pre>
+<p>For CSR without SSR</p>
+<pre lang="html" style="background-color:#2b303b;"><code><span style="color:#c0c5ce;">&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">type</span><span style="color:#c0c5ce;">=</span><span style="color:#a3be8c;">module</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">HfBlockquote </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">HTMLElement</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">constructor</span><span style="color:#eff1f5;">(){ </span><span style="color:#96b5b4;">super</span><span style="color:#eff1f5;">(); }
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">connectedCallback</span><span style="color:#eff1f5;">(){ </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">clientRender</span><span style="color:#eff1f5;">(); }
+</span><span style="color:#eff1f5;">    </span><span style="color:#8fa1b3;">clientRender</span><span style="color:#eff1f5;">() {
+</span><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">isEnhanced </span><span style="color:#c0c5ce;">= </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#8fa1b3;">hasAttribute</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">"</span><span style="color:#a3be8c;">enhanced</span><span style="color:#c0c5ce;">"</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">!</span><span style="color:#bf616a;">isEnhanced</span><span style="color:#eff1f5;">){
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Render on the client as needed
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#96b5b4;">setAttribute</span><span style="color:#eff1f5;">(</span><span style="color:#c0c5ce;">"</span><span style="color:#a3be8c;">enhanced</span><span style="color:#c0c5ce;">"</span><span style="color:#eff1f5;">,</span><span style="color:#c0c5ce;">"</span><span style="color:#a3be8c;">client</span><span style="color:#c0c5ce;">"</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">      }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">if </span><span style="color:#c0c5ce;">(!</span><span style="color:#bf616a;">customElements</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">get</span><span style="color:#c0c5ce;">("</span><span style="color:#a3be8c;">hf-blockquote</span><span style="color:#c0c5ce;">")){ 
+</span><span style="color:#c0c5ce;">    </span><span style="color:#65737e;">// Insert style into head
+</span><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">style </span><span style="color:#c0c5ce;">= document.</span><span style="color:#96b5b4;">createElement</span><span style="color:#c0c5ce;">('</span><span style="color:#a3be8c;">style</span><span style="color:#c0c5ce;">');
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">.textContent = '</span><span style="color:#a3be8c;">hf-blockquote { color: blue; }</span><span style="color:#c0c5ce;">'
+</span><span style="color:#c0c5ce;">    document.head.</span><span style="color:#96b5b4;">appendChild</span><span style="color:#c0c5ce;">(</span><span style="color:#bf616a;">style</span><span style="color:#c0c5ce;">);
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">customElements</span><span style="color:#c0c5ce;">.</span><span style="color:#8fa1b3;">define</span><span style="color:#c0c5ce;">('</span><span style="color:#a3be8c;">hf-blockquote</span><span style="color:#c0c5ce;">',</span><span style="color:#bf616a;">HfBlockquote</span><span style="color:#c0c5ce;">) 
+</span><span style="color:#c0c5ce;">  }
+</span><span style="color:#c0c5ce;">&lt;/</span><span style="color:#bf616a;">script</span><span style="color:#c0c5ce;">&gt;
+</span><span style="color:#c0c5ce;">
+</span></code></pre>
+<p>Note: For serverside rendered and clientside rendered components that otherwise would not need a custom element defined we can use it as a way to make sure the styles only get added once. If it is serverside rendered it will register the custom element and if the clientside component is added it will not run again because the custom element definition has already run.</p>
+
+    
+
+
+</hf-container>
+
+    
+    
+    
+  
+
+
+<script type="module">
+class HfResponsiveHeader extends HTMLElement {
+  constructor() { super() }
+}
+if (!customElements.get('hf-responsive-header')) {
+  customElements.define('hf-responsive-header', HfResponsiveHeader)
+} 
+</script><script type="module">
+class HfRow extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-row')) {
+    customElements.define('hf-row', HfRow)
+}
+</script><script type="module">
+class HfCol extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-col')) {
+    customElements.define('hf-col', HfCol)
+}
+</script><script type="module">
+class HfLink extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-link')) {
+    customElements.define('hf-link', HfLink)
+}
+</script><script type="module">
+  
+  class ThemeSwitch extends HTMLElement {
+    constructor() {
+      super();
+      const darkLightTheme = window.localStorage.getItem('dark-light-theme');
+      if (darkLightTheme === 'dark') { 
+        document.documentElement.classList.add('dark-mode'); 
+        document.documentElement.classList.remove('light-mode')
+      } 
+      if (darkLightTheme === 'light') { 
+        document.documentElement.classList.add('light-mode')
+        document.documentElement.classList.remove('dark-mode'); 
+      } 
+    }
+    connectedCallback() {
+        const isEnhanced = this.getAttribute('enhanced') === '✨'
+        // client-side rendering
+        if (!isEnhanced) {
+          this.innerHTML = `
+  <input type="checkbox" id="theme-toggle-checkbox" name="theme-toggle" >
+    <label for="theme-toggle-checkbox">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"></path></svg>
+      <span class="ball"></span>
+    </label>
+  `
+          this.setAttribute('enhanced', 'client')
+        }
+      this.themeSelector = this.querySelector('input#theme-toggle-checkbox')
+      this.themeSelector?.addEventListener('change', (e) => {
+        const darkLightTheme = localStorage.getItem('dark-light-theme');
+        const docClasses = Array.from(document.documentElement.classList)
+        const isDarkClass = docClasses?.includes('dark-mode')
+        const isLightClass = docClasses?.includes('light-mode')
+        const isNoClass = !isDarkClass && !isLightClass
+        const targetTheme = e.target.checked ? 'dark' : 'light'
+        const targetDark = targetTheme === 'dark'
+        const targetLight = targetTheme === 'light'
+        const osAutoTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  
+        console.log({docClasses, isDarkClass,isLightClass,isNoClass, targetDark, targetLight,osAutoTheme})
+        if (targetDark && (isDarkClass || (isNoClass && osAutoTheme==='dark'))) {
+          this.setTheme('light')
+          e.target.checked = false
+        } else if (targetLight && (isLightClass || (isNoClass && osAutoTheme==='light'))) {
+          this.setTheme('dark')
+          e.target.checked = true
+        } else if (targetDark) {
+          this.setTheme('dark')
+        } else if (targetLight) {
+          this.setTheme('light')
+        } 
+      });
+    } 
+    setTheme(theme) {
+      if (theme === "light") {
+        localStorage.setItem('dark-light-theme', 'light');
+        document.documentElement.classList.add('light-mode')
+        document.documentElement.classList.remove('dark-mode')
+      } else if (theme === "dark") {
+        localStorage.setItem('dark-light-theme', 'dark');
+        document.documentElement.classList.add('dark-mode')
+        document.documentElement.classList.remove('light-mode')
+      } else {
+        localStorage.setItem('dark-light-theme', 'auto');
+        document.documentElement.classList.remove('light-mode')
+        document.documentElement.classList.remove('dark-mode')
+      }
+    }
+  }
+  if (!customElements.get('hf-theme-switch')) {customElements.define('hf-theme-switch', ThemeSwitch);}
+  
+</script><script type="module">
+class HfHRule extends HTMLElement {
+    constructor() { super() }
+    connectedCallback() {
+      const isEnhanced = this.hasAttribute('enhanced')
+      // client-side rendering
+      if (!isEnhanced) {
+        this.innerHTML = '<hr/>'
+        this.setAttribute('enhanced', 'client')
+      }
+    }
+}
+if (!customElements.get('hf-h-rule')) { customElements.define('hf-h-rule', HfHRule) }
+</script><script type="module">
+class HfContainer extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-container')) {
+    customElements.define('hf-container', HfContainer)
+}
+</script><script type="module">
+class HfList extends HTMLElement {
+    constructor() {
+        super()
+    }
+}
+if (!customElements.get('hf-list')) {
+    customElements.define('hf-list', HfList)
+}
+</script><script type="module">
+  
+  class HfCode extends HTMLElement {
+      constructor() { 
+        super() 
+  
+        const isEnhanced = this.hasAttribute('enhanced')
+        // client-side rendering
+        if (!isEnhanced) {
+          const code = this.querySelector('code')
+          if (!code) {
+              const code = document.createElement('code')
+              const children = this.children
+              for (let i = 0; i < children.length; i++) {
+                  code.appendChild(children[i])
+              }
+              this.appendChild(code)
+          }
+          this.setAttribute('enhanced', 'client')
+        }
+      }
+  }
+  if (!customElements.get('hf-code')) { customElements.define('hf-code',HfCode)}
+  
+</script></body></html>
