@@ -56,6 +56,18 @@ const components = [
 <hf-alert type="warn">Cautionary message</hf-alert>
 <hf-alert type="error" dismissible="false">Error message with no dismiss button</hf-alert>`},
   {
+    name: "Avatar",
+    path: "avatar",
+    exampleUsage: `
+<hf-avatar>
+  <img src="https://picsum.photos/100" alt="user photo">
+</hf-avatar>
+<hf-avatar text="RB"></hf-avatar>
+<hf-avatar shape="square" text="HF"></hf-avatar>
+<hf-avatar shape="circle"></hf-avatar>
+<hf-avatar size="small" text="S"></hf-avatar>
+<hf-avatar size="large" text="L"></hf-avatar>`},
+  {
     name: "Autocomplete",
     path: "autocomplete",
     exampleUsage: `
@@ -89,6 +101,21 @@ const components = [
     path: "blockquote",
     exampleUsage: `<hf-blockquote>Someone said something.</hf-blockquote>`
   },
+  {
+    name: "Card",
+    path: "card",
+    exampleUsage: `
+<hf-card title="Card with Link" href="#example">
+  <img slot=image src="https://picsum.photos/500/200" alt="example">
+  <p>Card description goes here.</p>
+  <small>Footer text</small>
+</hf-card>`},
+  {
+    name: "Code Block",
+    path: "code-block",
+    exampleUsage: `
+<hf-code-block>const greeting = "Hello, World!"
+console.log(greeting)</hf-code-block>`},
   {
     name: "Breadcrumb", path: "breadcrumb", exampleUsage: `<hf-breadcrumb>
   <nav>
@@ -322,15 +349,18 @@ const components = [
 </hf-input-group>
 `},
   {
-    name: "Separator", path: "seperator", exampleUsage: `
-<p>Content</p>
-<hf-seperator></hf-seperator>
-<p>Content</p>
-<div class="flex gap-xs">
+    name: "Horizontal Rule", path: "h-rule", exampleUsage: `
+<p>Content above</p>
+<hf-h-rule></hf-h-rule>
+<p>Content below</p>
+` },
+  {
+    name: "Vertical Rule", path: "v-rule", exampleUsage: `
+<div style="display:flex; gap:var(--hf-space-xs); align-items:stretch; height:2rem;">
     <div>Content</div>
-    <hf-seperator vertical></hf-seperator>
+    <hf-v-rule></hf-v-rule>
     <div>Content</div>
-    <hf-seperator vertical></hf-seperator>
+    <hf-v-rule></hf-v-rule>
     <div>Content</div>
 </div>
 ` },
@@ -402,7 +432,7 @@ const components = [
   {
     name: "Code", path: "code", exampleUsage: `
 <hf-code><pre>Text</pre></hf-code>
-<hf-code><code>Inline<code></hf-code>` },
+<hf-code><code>Inline</code></hf-code>` },
   {
     name: "Headings", path: 'headings', exampleUsage: `
 <h1>Heading 1</h1>
@@ -460,6 +490,16 @@ const components = [
 </hf-blockquote>
 <small>This is for small print, side-comments, disclaimers, etc.</small>
 `},
+  {
+    name: "Theme Switch",
+    path: "theme-switch",
+    exampleUsage: `
+<hf-theme-switch></hf-theme-switch>`},
+  {
+    name: "Theme Menu",
+    path: "theme-menu",
+    exampleUsage: `
+<hf-theme-menu></hf-theme-menu>`},
 ]
 
 export default components

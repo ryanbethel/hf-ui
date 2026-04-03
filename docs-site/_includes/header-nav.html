@@ -2,16 +2,16 @@
       <span slot=domain>HTML-First UI</span>
       <div slot=nav-items>
         <hf-link><a 
-          {% if page.url | split: '/' | first === 'components' %} 
+          {% if page.url contains '/components' %} 
           aria-current=page 
           {% endif %}  
-           href='{{ "components" | relative_url }}' 
+           href='{{ "/components/" | relative_url }}' 
           >Components</a></hf-link>
           <hf-link><a 
-          {% if page.url | replace: '.html' '' | === 'examples' %} 
+          {% if page.url contains '/examples' %} 
           aria-current=page 
           {% endif %}  
-           href='{{ "examples" | relative_url }}' 
+           href='{{ "/examples/" | relative_url }}' 
           >Examples</a></hf-link>
         <hf-theme-switch></hf-theme-switch>
       </div>

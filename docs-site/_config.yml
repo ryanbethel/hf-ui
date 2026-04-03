@@ -1,7 +1,7 @@
 title: HF-UI HTML First SSR/CSR Components
 email: ryan.bethel@gmail.com
 description: >- 
-    HF-UI HTML first components are universal server side and client side rendered web components for use in any framework or <hf-h-rule></hf-h-rule>programming language. They are dependency free and easy to use.
+    HF-UI HTML first components are universal server side and client side rendered web components for use in any framework or programming language. They are dependency free and easy to use.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb

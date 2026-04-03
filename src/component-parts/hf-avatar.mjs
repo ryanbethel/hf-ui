@@ -94,7 +94,7 @@ const elementHTML = `
 ${indentChunk(cssString)}
 </style>
 ${markupString}
-<script type=module">
+<script type="module">
 ${scriptString}
 if (!customElements.get('hf-avatar')) {
   customElements.define('hf-avatar', HfAvatar);

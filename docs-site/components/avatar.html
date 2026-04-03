@@ -1,0 +1,23 @@
+---
+layout: component
+title: Avatar
+sub-title: A component for displaying user profile images or initials
+description: |
+  ## Notes
+  The avatar component displays a user image, initials, or a default person icon.
+
+  - Use the `text` attribute to show initials when no image is available
+  - Set `shape` to `circle` (default) or `square`
+  - Set `size` to `small`, `medium` (default), `large`, or `xlarge`
+  - Nest an `<img>` inside for a photo avatar
+  - Without an image or text, a default person silhouette is shown
+---
+
+<hf-avatar>
+  <img src="https://picsum.photos/100" alt="user photo">
+</hf-avatar>
+<hf-avatar text="RB"></hf-avatar>
+<hf-avatar shape="square" text="HF"></hf-avatar>
+<hf-avatar shape="circle"></hf-avatar>
+<hf-avatar size="small" text="S"></hf-avatar>
+<hf-avatar size="large" text="L"></hf-avatar>

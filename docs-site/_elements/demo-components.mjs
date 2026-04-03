@@ -8,7 +8,7 @@ export default function DemoComponent({ html, state }) {
   }
 </style>
 <hf-container >
-  <hf-seperator></hf-seperator>
+  <hf-h-rule></hf-h-rule>
   <hf-row >
     <hf-col span="2">
       <hf-list type=none>

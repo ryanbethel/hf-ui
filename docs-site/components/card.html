@@ -1,0 +1,19 @@
+---
+layout: component
+title: Card
+sub-title: A component for displaying content in a card layout
+description: |
+  ## Notes
+  The card component displays content with an optional image and title link.
+
+  - Set `title` attribute for the card heading
+  - Set `href` attribute to make the title a link
+  - Use `slot="image"` for an optional card image
+  - Default slot content appears in the card body
+---
+
+<hf-card title="Card with Link" href="#example">
+  <img slot=image src="https://picsum.photos/500/200" alt="example">
+  <p>Card description goes here.</p>
+  <small>Footer text</small>
+</hf-card>
